@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "ramws"
+version = "0.0.0"
+description = "RAM Web Services."
+authors = [
+  "Ariel Martínez <ariel@martinezs.dev>",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.9"
+asymmetric = "^0.3.0"
+
+[tool.poetry.dev-dependencies]
+black = "^21.6b0"
+isort = "^5.9.2"
+
+[tool.black]
+line_length = 90
+target_version = ["py36", "py37", "py38"]
+exclude = '/(\.venv)/'
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+sections = ["FUTURE", "STDLIB", "ASYMMETRIC", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+default_section = "THIRDPARTY"
+known_asymmetric = "asymmetric"
+known_first_party = ["main", "settings"]
+
+[build-system]
+requires = ["poetry>=1.1.7"]
+build-backend = "poetry.masonry.api"

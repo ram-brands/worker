@@ -1,0 +1,13 @@
+services:
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        RUN_ENV: development
+    init: true
+    environment:
+      PORT: 5000
+      RUN_ENV: development
+    ports:
+      - "5000:5000"

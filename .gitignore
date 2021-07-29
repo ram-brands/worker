@@ -1,0 +1,11 @@
+# Python.
+__pycache__
+
+# Editor configuration.
+.vscode
+
+# Virtual environment.
+.venv
+
+# Operating system.
+.DS_Store
