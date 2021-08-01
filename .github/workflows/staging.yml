@@ -46,5 +46,5 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           region: ${{ secrets.AWS_REGION }}
           application_name: ${{ secrets.APPLICATION_NAME }}
-          environment_name: staging
+          environment_name: worker-staging
           version_label: ${{ secrets.APPLICATION_NAME }}-latest
