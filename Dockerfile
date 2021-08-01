@@ -41,9 +41,6 @@ RUN poetry export -f requirements.txt $(test "$RUN_ENV" = development && echo "-
 # Import the final image.
 FROM python:3.8-slim-buster
 
-# Add Django's secret key.
-ARG DJANGO_SECRET_KEY
-
 # Set up some environmental variables.
 ENV LANG=C.UTF-8
 
