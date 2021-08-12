@@ -7,5 +7,8 @@ __pycache__
 # Virtual environment.
 .venv
 
+# Secrets and environment variables.
+local.py
+
 # Operating system.
 .DS_Store

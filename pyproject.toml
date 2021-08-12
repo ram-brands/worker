@@ -9,6 +9,7 @@ authors = [
 [tool.poetry.dependencies]
 python = ">=3.8,<3.9"
 asymmetric = "^0.3.0"
+boto3 = "^1.18.20"
 
 [tool.poetry.dev-dependencies]
 black = "^21.6b0"
@@ -25,7 +26,7 @@ multi_line_output = 3
 sections = ["FUTURE", "STDLIB", "ASYMMETRIC", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
 default_section = "THIRDPARTY"
 known_asymmetric = "asymmetric"
-known_first_party = ["main", "settings"]
+known_first_party = ["env", "main", "storage"]
 
 [build-system]
 requires = ["poetry>=1.1.7"]
