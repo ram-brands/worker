@@ -15,7 +15,6 @@ class FileSystem:
     def __init__(self, run_id):
         self.run_id = run_id
         self.root = TMP_DIR(dir=run_id)
-
         self.mount()
 
     def __enter__(self):
@@ -32,17 +31,15 @@ class FileSystem:
         Mounts the contents of the input to the temporary file system.
         """
         file = Storage().open(path=f"{self.run_id}/input.zip")
-
         content = file.read()
+
+        # Unzip files into root directory
         buffer = BytesIO(content)
         zipfile = ZipFile(buffer)
-
-        root = TMP_DIR(dir=self.run_id)
-        zipfile.extractall(root)
+        zipfile.extractall(self.root)
 
     def makedirs(self, path):
         complete_path = os.path.join(self.root, path)
-
         dir = os.path.dirname(complete_path)
         os.makedirs(dir, exist_ok=True)
 
@@ -58,7 +55,6 @@ class FileSystem:
                 for path in paths:
                     complete_path = os.path.join(dir, path)
                     base = os.path.basename(path)
-                    logger.info(complete_path)
                     zipfile.write(filename=complete_path, arcname=base)
 
         buffer.seek(0)
