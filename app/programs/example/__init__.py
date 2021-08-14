@@ -9,7 +9,7 @@ def exec(run_id):
     with FileSystem(run_id) as fs:
 
         ########################
-        # Mount the filesystem #
+        # Mount the file system #
         ########################
 
         fs.mount()
