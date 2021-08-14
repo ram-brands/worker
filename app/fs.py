@@ -16,6 +16,8 @@ class FileSystem:
         self.run_id = run_id
         self.root = TMP_DIR(dir=run_id)
 
+        self.mount()
+
     def __enter__(self):
         return self
 

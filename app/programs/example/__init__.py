@@ -6,13 +6,11 @@ logger = logging.getLogger(__name__)
 
 
 def exec(run_id):
+    #########################
+    # Mount the file system #
+    #########################
+
     with FileSystem(run_id) as fs:
-
-        ########################
-        # Mount the file system #
-        ########################
-
-        fs.mount()
 
         ##############
         # Read files #
@@ -44,3 +42,6 @@ def exec(run_id):
 
         # The files will be sent to the remote storage.
         fs.commit_zip(dir="output")
+
+    # Upon exiting the context manager
+    # the temporary file system will be destroyed.
