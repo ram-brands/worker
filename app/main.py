@@ -1,6 +1,15 @@
 from asymmetric import asymmetric as app
 
+import sentry_sdk
+from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
+
+import env
 from programs import example
+
+sentry_sdk.init(dsn=env.SENTRY_DSN, environment=env.STARLETTE_ENV)
+
+asgi_app = SentryAsgiMiddleware(app)
+
 
 programs = dict(example=example)
 
