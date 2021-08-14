@@ -19,7 +19,7 @@ def exec(run_id):
         ##############
 
         with fs.open("some_folder/data.xls", mode="rb") as file:
-            some_more_data = file.read()
+            some_data = file.read()
 
         ####################
         # Process the data #
@@ -43,5 +43,4 @@ def exec(run_id):
         #####################
 
         # The files will be sent to the remote storage.
-        # The temporary file system will be destroyed.
         fs.commit_zip(dir="output")
