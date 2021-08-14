@@ -5,9 +5,8 @@ from programs import example
 programs = dict(example=example)
 
 
-@app.router("/", methods=["get"])
-def index():
-
-    programs["example"].exec(run_id="66c617d9498743738b1d3fdccfc178e9")
-
-    return "Hello, World!"
+@app.router("/", methods=["post"])
+def index(program_name, run_id):
+    program = programs[program_name]
+    program.exec(run_id)
+    return run_id
