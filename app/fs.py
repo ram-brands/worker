@@ -66,8 +66,7 @@ class FileSystem:
     def open(self):
         class FileContextManger:
             def __init__(obj, path, **kwargs):
-                root = TMP_DIR(dir=self.run_id)
-                complete_path = os.path.join(root, path)
+                complete_path = os.path.join(self.root, path)
                 obj.file = open(complete_path, **kwargs)
 
             def __enter__(obj):
