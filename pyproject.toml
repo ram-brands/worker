@@ -26,7 +26,7 @@ multi_line_output = 3
 sections = ["FUTURE", "STDLIB", "ASYMMETRIC", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
 default_section = "THIRDPARTY"
 known_asymmetric = "asymmetric"
-known_first_party = ["env", "main", "storage"]
+known_first_party = ["env", "main", "storage", "utils"]
 
 [build-system]
 requires = ["poetry>=1.1.7"]
