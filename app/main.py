@@ -1,12 +1,15 @@
-from asymmetric import asymmetric as app
+from fastapi import FastAPI
 
-import sentry_sdk
-from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
-
-import env
+# import env
 from programs import example
 
-sentry_sdk.init(dsn=env.SENTRY_DSN, environment=env.STARLETTE_ENV)
+# import sentry_sdk
+# from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
+
+
+app = FastAPI()
+
+# sentry_sdk.init(dsn=env.SENTRY_DSN, environment=env.FASTAPI_ENV)
 
 # asgi_app = SentryAsgiMiddleware(app)
 
@@ -14,8 +17,8 @@ sentry_sdk.init(dsn=env.SENTRY_DSN, environment=env.STARLETTE_ENV)
 programs = dict(example=example)
 
 
-@app.router("/", methods=["post"])
-def index(program_name, run_id):
+@app.post("/")
+def index(program_name: str, run_id: str):
     program = programs[program_name]
     program.exec(run_id)
     return "OK"

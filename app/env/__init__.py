@@ -5,7 +5,7 @@ from pathlib import Path
 # ENV VARS #
 ############
 
-STARLETTE_ENV = os.environ.get("RUN_ENV")
+FASTAPI_ENV = os.environ.get("RUN_ENV")
 
 SENTRY_DSN = os.environ.get("SENTRY_DSN")
 

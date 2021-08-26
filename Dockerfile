@@ -1,7 +1,7 @@
 # Import the environment-setter image.
 FROM python:3.8-slim-buster
 
-# Add Starlette’s environment type.
+# Add FastAPI’s environment type.
 ARG RUN_ENV
 
 # Set up some environmental variables.
