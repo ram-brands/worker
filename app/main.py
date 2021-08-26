@@ -1,20 +1,16 @@
 from fastapi import FastAPI
 
-# import env
-from programs import example
+import sentry_sdk
+from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
 
-# import sentry_sdk
-# from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
-
+import env
+from programs import programs
 
 app = FastAPI()
 
-# sentry_sdk.init(dsn=env.SENTRY_DSN, environment=env.FASTAPI_ENV)
+sentry_sdk.init(dsn=env.SENTRY_DSN, environment=env.FASTAPI_ENV)
 
-# asgi_app = SentryAsgiMiddleware(app)
-
-
-programs = dict(example=example)
+app.add_middleware(SentryAsgiMiddleware)
 
 
 @app.post("/")
