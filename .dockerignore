@@ -8,3 +8,6 @@
 !pyproject.toml
 !poetry.lock
 !entrypoint.sh
+
+# Include Elastic Beanstalk configuration files.
+!.ebextensions
