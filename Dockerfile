@@ -1,5 +1,5 @@
 # Import the environment-setter image.
-FROM python:3.8-slim-buster
+FROM python:3.8-buster
 
 # Add FastAPI’s environment type.
 ARG RUN_ENV
