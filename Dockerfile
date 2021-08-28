@@ -67,6 +67,7 @@ EXPOSE 5000 8080
 
 # Run as a non-root user.
 RUN useradd -m ramwsuser
+RUN chown -R ramwsuser ./tmp
 USER ramwsuser
 
 # Start the main process.
