@@ -16,7 +16,7 @@ def exec(run_id):
         # Read files #
         ##############
 
-        with fs.open("some_folder/data.xls", mode="rb") as file:
+        with open(fs.get_path("some_folder/data.xls"), mode="rb") as file:
             some_data = file.read()
 
         ####################
@@ -33,7 +33,7 @@ def exec(run_id):
 
         fs.makedirs(path)
 
-        with fs.open(path, mode="wb") as file:
+        with open(fs.get_path(path), mode="wb") as file:
             file.write(b"Hello, world!")
 
         #####################
