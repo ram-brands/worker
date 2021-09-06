@@ -1,9 +1,9 @@
 import xlsxwriter
 
 
-def write_excel(header, data, name="test"):
+def write_excel(fs, header, data, name="test"):
     # Create a workbook and add a worksheet.
-    workbook = xlsxwriter.Workbook(f"results/{name}.xlsx")
+    workbook = xlsxwriter.Workbook(fs.get_path(f"results/{name}.xlsx"))
     worksheet = workbook.add_worksheet()
     # Start from the first cell. Rows and columns are zero indexed.
     row = 0
@@ -22,9 +22,9 @@ def write_excel(header, data, name="test"):
     print(f"Se creó el archivo {name}.xlsx exitosamente")
 
 
-def write_csv(header, data, name="test.csv"):
+def write_csv(fs, header, data, name="test.csv"):
     header = ", ".join(header) + "\n"
-    with open(f"results/{name}", "w") as file:
+    with fs.open(f"results/{name}", "w") as file:
         file.write(header)
         for line in data:
             line = [str(x) for x in line]

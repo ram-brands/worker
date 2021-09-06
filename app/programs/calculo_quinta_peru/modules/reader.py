@@ -7,9 +7,7 @@ from xlrd import open_workbook
 
 def read_base_pay(fs, path="data/Datos Planilla Activos PB.xlsx"):  #
     print(f"Leyendo base pay...")
-    with fs.open(path, mode="wb") as file:
-        wb = open_workbook(file_contents=file.read())
-
+    with open_workbook(fs.get_path(path)) as wb:
         for s in wb.sheets():
             base_pay = {}
             BasePay = namedtuple("BasePay", ["dni", "name", "pay"])
@@ -41,9 +39,7 @@ def read_base_pay(fs, path="data/Datos Planilla Activos PB.xlsx"):  #
 
 def read_total_pay(fs, path="data/Planilla Haberes Julio-2021 - Peru Brands.xlsx"):  #
     print(f"Leyendo total pay...")
-    with fs.open(path, mode="wb") as file:
-        wb = open_workbook(file_contents=file.read())
-
+    with open_workbook(fs.get_path(path)) as wb:
         for s in wb.sheets():
             if s.name == "Planilla":
                 total_pay = {}

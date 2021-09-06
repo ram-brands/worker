@@ -379,10 +379,18 @@ build = ["wheel", "twine"]
 docs = ["sphinx"]
 test = ["pytest", "pytest-cov"]
 
+[[package]]
+name = "xlsxwriter"
+version = "3.0.1"
+description = "A Python module for creating Excel XLSX files."
+category = "main"
+optional = false
+python-versions = ">=3.4"
+
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<3.9"
-content-hash = "063312b4abdec5ecc51f4dd1dfd8abf8c70896545f69f74d3eb8d14a342d66bc"
+content-hash = "717512ef1d417d1e3c8dd592f4b1235642822668f6c4f135c44ac487c65eee90"
 
 [metadata.files]
 appdirs = [
@@ -657,4 +665,8 @@ websockets = [
 xlrd = [
     {file = "xlrd-2.0.1-py2.py3-none-any.whl", hash = "sha256:6a33ee89877bd9abc1158129f6e94be74e2679636b8a205b43b85206c3f0bbdd"},
     {file = "xlrd-2.0.1.tar.gz", hash = "sha256:f72f148f54442c6b056bf931dbc34f986fd0c3b0b6b5a58d013c9aef274d0c88"},
+]
+xlsxwriter = [
+    {file = "XlsxWriter-3.0.1-py3-none-any.whl", hash = "sha256:2f2af944d2b4b5f21cd3ac8e01b2417ec74c60e2ca11cae90b4f32ee172c99d6"},
+    {file = "XlsxWriter-3.0.1.tar.gz", hash = "sha256:3f39bf581c55f3ad1438bc170d7f4c4649cee8b6b7a80d21f79508118eeea52a"},
 ]

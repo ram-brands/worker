@@ -38,6 +38,9 @@ class FileSystem:
         zipfile = ZipFile(buffer)
         zipfile.extractall(self.root)
 
+    def get_path(self, subpath):
+        return os.path.join(self.root, subpath)
+
     def makedirs(self, path):
         complete_path = os.path.join(self.root, path)
         dir = os.path.dirname(complete_path)
@@ -59,18 +62,3 @@ class FileSystem:
 
         buffer.seek(0)
         return Storage().save(path=f"{self.run_id}/output.zip", file=buffer)
-
-    @property
-    def open(self):
-        class FileContextManger:
-            def __init__(obj, path, **kwargs):
-                complete_path = os.path.join(self.root, path)
-                obj.file = open(complete_path, **kwargs)
-
-            def __enter__(obj):
-                return obj.file
-
-            def __exit__(obj, exc_type, exc_value, traceback):
-                obj.file.close()
-
-        return FileContextManger
