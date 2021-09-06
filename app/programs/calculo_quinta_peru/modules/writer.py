@@ -24,7 +24,11 @@ def write_excel(fs, header, data, name="test"):
 
 def write_csv(fs, header, data, name="test.csv"):
     header = ", ".join(header) + "\n"
-    with open(fs.get_path(f"results/{name}"), "w") as file:
+
+    path = f"results/{name}"
+    fs.makedirs(path)
+
+    with open(fs.get_path(path), "w") as file:
         file.write(header)
         for line in data:
             line = [str(x) for x in line]

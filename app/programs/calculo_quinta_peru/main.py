@@ -17,8 +17,6 @@ def run(fs):
         header, formatted_taxes = processor.format_taxes(taxes)
         writer.write_csv(fs, header, formatted_taxes)
 
-    except FileNotFoundError as err:
-        print(f"No se encontró una carpeta con el nombre {err}")
     except UnboundLocalError as err:
         print(f"No se encontró la página {err} en los archivos de ")
     # except Exception as err:

@@ -42,7 +42,7 @@ class FileSystem:
         return os.path.join(self.root, subpath)
 
     def makedirs(self, path):
-        complete_path = os.path.join(self.root, path)
+        complete_path = self.get_path(path)
         dir = os.path.dirname(complete_path)
         os.makedirs(dir, exist_ok=True)
 
