@@ -1,12 +1,9 @@
-import logging
 import os
 import shutil
 from io import BytesIO
 from zipfile import ZipFile
 
 from storage import Storage
-
-logger = logging.getLogger(__name__)
 
 TMP_DIR = lambda dir: os.path.join(".", "tmp", dir)
 
