@@ -5,7 +5,7 @@ Luego del análisis, se crea un archivo 'results.csv', el cual contiene el resul
 
 # Como utilizar el programa:
 
-1. Cargar documentos en la carpeta 'data'.
+1. Cargar documentos en la carpeta 'data' con formato '.xlsx'.
 
 2. Abrir y ejecutar el archivo 'main.py'.
 
