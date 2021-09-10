@@ -1,8 +1,6 @@
 import time
-from .modules import reader
-from .modules import compare
-from .modules import build_cruce
-from .modules import writer
+
+from .modules import build_cruce, compare, reader, writer
 
 
 def read_files(fs):
@@ -17,15 +15,17 @@ def read_files(fs):
 
 def run(fs):
     start = time.time()
-    PROJECT = 'Cruce Pagina E-Commerce'
-    VERSION = 'V1.1'
+    PROJECT = "Cruce Pagina E-Commerce"
+    VERSION = "V1.1"
     print(f"Corriendo versión {VERSION}")
     try:
         pass
         stock, estoque, maestro, exportacion, atrapero = read_files(fs)
-        header, data = build_cruce.build_cruce(estoque, stock, maestro, exportacion, atrapero)
+        header, data = build_cruce.build_cruce(
+            estoque, stock, maestro, exportacion, atrapero
+        )
         compare.compare(fs, header, data)
-        writer.write_excel(fs, header, data, 'cruce')
+        writer.write_excel(fs, header, data, "cruce")
     except KeyError:
         pass
     except FileNotFoundError as err:
@@ -34,6 +34,7 @@ def run(fs):
         print(f"No se encontró la página {err} en los archivos de ")
     end = time.time()
     print(f"Programa Finalizado en {round(end - start, 2)} segundos")
+
 
 if __name__ == "__main__":
     pass

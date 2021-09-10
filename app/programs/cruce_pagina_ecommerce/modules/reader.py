@@ -1,8 +1,10 @@
-from xlrd import open_workbook
+import os
+import sys
 from collections import namedtuple
-from . import paths
-import sys,os
 
+from xlrd import open_workbook
+
+from . import paths
 
 ##########################################################################
 # UC (unique_code) = warehouse-sku
@@ -11,7 +13,7 @@ import sys,os
 
 
 def get_file_name(fs, key_word):
-    all_files = os.listdir(fs.get_path('data/'))
+    all_files = os.listdir(fs.get_path("data/"))
     all_files = [x for x in all_files if "$" not in x]
     file_ = None
     for f in all_files:
@@ -22,6 +24,7 @@ def get_file_name(fs, key_word):
         print(f"ERROR: No hay archivo con palabra clave {key_word}")
         exit()
 
+
 def read_stock(fs, path=paths.STOCK):  # Leer BBDD de peso y vol por sku
     file_ = get_file_name(fs, path)
     print(f"Leyendo Inventario...")
@@ -29,33 +32,34 @@ def read_stock(fs, path=paths.STOCK):  # Leer BBDD de peso y vol por sku
     for s in wb.sheets():
         unique_code_stock = {}
         unique_codes = []
-        Attribute = namedtuple("Attribute", ['warehouse', 'sku'])
+        Attribute = namedtuple("Attribute", ["warehouse", "sku"])
         for row in range(s.nrows):
             col_value = []
             # for col in range(s.ncols):
 
             #     value = (s.cell(row, col).value)
             #     col_value.append(value)
-            col_value= [s.cell(row, col).value for col in range(s.ncols)]
+            col_value = [s.cell(row, col).value for col in range(s.ncols)]
             if row == 0:
                 header = col_value
                 warehouse_index = header.index("WhsCode")
-                sku_index = header.index('ItemCode')
-                stock_index = header.index('Stock')
+                sku_index = header.index("ItemCode")
+                stock_index = header.index("Stock")
             else:
                 warehouse = col_value[warehouse_index]
-                sku = str(col_value[sku_index]).replace('.0','')
+                sku = str(col_value[sku_index]).replace(".0", "")
                 stock = col_value[stock_index]
-                key = f'{warehouse}-{sku}'
+                key = f"{warehouse}-{sku}"
                 unique_code_stock[key] = stock
                 # unique_codes.append([key])
     # print(unique_code_stock)
     # print(unique_codes)
     return unique_code_stock
 
+
 def read_maestro(fs, path=paths.MAESTRO):  # Leer Maestro para obtener {estilo-color: sku}
     file_ = get_file_name(fs, path)
-    if '.txt' in file_:
+    if ".txt" in file_:
         maestro = read_maestro_txt(fs, file_)
     else:
         print(f"Leyendo Maestro...")
@@ -67,18 +71,18 @@ def read_maestro(fs, path=paths.MAESTRO):  # Leer Maestro para obtener {estilo-c
             for row in range(s.nrows):
                 col_value = []
                 for col in range(s.ncols):
-                    value = (s.cell(row, col).value)
+                    value = s.cell(row, col).value
                     col_value.append(value)
                 if row == 0:
                     header = col_value
                     style_index = header.index("Style")
-                    color_index = header.index('Color')
-                    sku_index = header.index('Número de artículo')
+                    color_index = header.index("Color")
+                    sku_index = header.index("Número de artículo")
                 else:
-                    style = str(col_value[style_index]).replace('.0','')
-                    color = str(col_value[color_index]).replace('.0','')
-                    sku = str(col_value[sku_index]).replace('.0','')
-                    SC = f'{style}-{color}'
+                    style = str(col_value[style_index]).replace(".0", "")
+                    color = str(col_value[color_index]).replace(".0", "")
+                    sku = str(col_value[sku_index]).replace(".0", "")
+                    SC = f"{style}-{color}"
                     maestro[sku] = SC
                     style_color.add(SC)
         # print(data)
@@ -89,26 +93,26 @@ def read_maestro(fs, path=paths.MAESTRO):  # Leer Maestro para obtener {estilo-c
 
 def read_maestro_txt(fs, path):  # Leer Maestro para obtener {estilo-color: sku}
     print(f"Leyendo Maestro txt...")
-    with open(fs.get_path(path), 'r', encoding="utf16", errors='ignore') as f:
+    with open(fs.get_path(path), "r", encoding="utf16", errors="ignore") as f:
         # contents = f.read()
         # contents = contents.decode('utf-16', 'ignore')
         style_color = set()
         maestro = {}
         header = None
         for row in f:
-            line = row.strip().split('\t')
+            line = row.strip().split("\t")
 
-            Attribute = namedtuple("Attribute", ['style', 'color'])
+            Attribute = namedtuple("Attribute", ["style", "color"])
             if not header:
                 header = line
                 style_index = header.index("Style")
-                color_index = header.index('Color')
-                sku_index = header.index('Número de artículo')
+                color_index = header.index("Color")
+                sku_index = header.index("Número de artículo")
             else:
-                style = str(line[style_index]).replace('.0','')
-                color = str(line[color_index]).replace('.0','')
-                sku = str(line[sku_index]).replace('.0','')
-                SC = f'{style}-{color}'
+                style = str(line[style_index]).replace(".0", "")
+                color = str(line[color_index]).replace(".0", "")
+                sku = str(line[sku_index]).replace(".0", "")
+                SC = f"{style}-{color}"
                 # print(sku)
                 # print(color)
                 # exit()
@@ -120,7 +124,9 @@ def read_maestro_txt(fs, path):  # Leer Maestro para obtener {estilo-color: sku}
     return maestro
 
 
-def read_estoque(fs, path=paths.ESTOQUE):  # Consolidar estoque con saldo mayor a 0, {UC:stock}
+def read_estoque(
+    fs, path=paths.ESTOQUE
+):  # Consolidar estoque con saldo mayor a 0, {UC:stock}
     file_ = get_file_name(fs, path)
     print(f"Leyendo Estoque...")
     wb = open_workbook(fs.get_path(f"data/{file_}"))
@@ -131,19 +137,19 @@ def read_estoque(fs, path=paths.ESTOQUE):  # Consolidar estoque con saldo mayor 
         for row in range(s.nrows):
             col_value = []
             for col in range(s.ncols):
-                value = (s.cell(row, col).value)
+                value = s.cell(row, col).value
                 col_value.append(value)
             if row == 0:
                 header = col_value
                 warehouse_index = header.index("WarehouseId")
-                sku_index = header.index('RefId')
-                stock_index = header.index('AvailableQuantity')
+                sku_index = header.index("RefId")
+                stock_index = header.index("AvailableQuantity")
             else:
                 warehouse = col_value[warehouse_index]
-                sku = str(col_value[sku_index]).replace('.0','')
+                sku = str(col_value[sku_index]).replace(".0", "")
                 stock = col_value[stock_index]
                 if stock > 0:
-                    key = f'{warehouse}-{sku}'
+                    key = f"{warehouse}-{sku}"
                     estoque[key] = stock
     return estoque
 
@@ -158,14 +164,14 @@ def read_exportacion(fs, path=paths.EXPORTACION):  # Obtner {sku: pim}
         for row in range(s.nrows):
             col_value = []
             for col in range(s.ncols):
-                value = (s.cell(row, col).value)
+                value = s.cell(row, col).value
                 col_value.append(value)
             if row == 0:
                 header = col_value
-                sku_index = header.index('Sku Codigo')
-                pim_index = header.index('Producto Mostrar Producto Tienda')
+                sku_index = header.index("Sku Codigo")
+                pim_index = header.index("Producto Mostrar Producto Tienda")
             else:
-                sku = str(col_value[sku_index]).replace('.0','')
+                sku = str(col_value[sku_index]).replace(".0", "")
                 pim = col_value[pim_index]
                 exportacion[sku] = pim
     # print(data)
@@ -181,21 +187,21 @@ def read_atrapero(fs, path=paths.ATRAPERO):  # Obtener si sku esta prendido
     atrapero = {}
     for s in wb.sheets():
         # print(f'Leyendo {s.name}')
-        Attribute = namedtuple("Attribute", ['active', 'active2', 'show', 'category'])
+        Attribute = namedtuple("Attribute", ["active", "active2", "show", "category"])
         for row in range(s.nrows):
             col_value = []
             for col in range(s.ncols):
-                value = (s.cell(row, col).value)
+                value = s.cell(row, col).value
                 col_value.append(value)
             if row == 0:
                 header = col_value
-                sku_index = header.index('_SkuEan')
-                active_index = header.index('_ActivateSkuIfPossible')
-                category_index = header.index('_CategoryName')
-                active2_index = header.index('_SkuIsActive (No es posible modificar)')
-                show_index = header.index('_ShowOnSite')
+                sku_index = header.index("_SkuEan")
+                active_index = header.index("_ActivateSkuIfPossible")
+                category_index = header.index("_CategoryName")
+                active2_index = header.index("_SkuIsActive (No es posible modificar)")
+                show_index = header.index("_ShowOnSite")
             else:
-                sku = str(col_value[sku_index]).replace('.0','')
+                sku = str(col_value[sku_index]).replace(".0", "")
                 active = col_value[active_index]
                 active2 = col_value[active2_index]
                 show = col_value[show_index]
@@ -215,6 +221,7 @@ def read_atrapero(fs, path=paths.ATRAPERO):  # Obtener si sku esta prendido
                 attribute = Attribute(active, active2, show, category)
                 atrapero[sku] = attribute
     return atrapero
+
 
 if __name__ == "__main__":
     pass
