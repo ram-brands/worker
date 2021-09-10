@@ -3,7 +3,9 @@ import xlsxwriter
 
 def write_excel(fs, header, data, name="test"):
     # Create a workbook and add a worksheet.
-    workbook = xlsxwriter.Workbook(fs.get_path(f'results/{name}.xlsx'))
+    path = f"results/{name}.xlsx"
+    fs.makedirs(path)
+    workbook = xlsxwriter.Workbook(fs.get_path(path))
     worksheet = workbook.add_worksheet()
     # Start from the first cell. Rows and columns are zero indexed.
     row = 0
