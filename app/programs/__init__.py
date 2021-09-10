@@ -4,6 +4,7 @@ from . import (
     consolidacion_compras_por_estilo,
     devoluciones_api_mercado_pago,
     cruce_pagina_ecommerce,
+    revision_bbdd_ventas_y_stock,
     example,
 )
 
@@ -13,5 +14,6 @@ programs = dict(
     devoluciones_api_mercado_pago=devoluciones_api_mercado_pago,
     blue_express=blue_express,
     cruce_pagina_ecommerce=cruce_pagina_ecommerce,
+    revision_bbdd_ventas_y_stock=revision_bbdd_ventas_y_stock,
     example=example,
 )
