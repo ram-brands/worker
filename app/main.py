@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import BackgroundTasks, FastAPI
 
 import sentry_sdk
 from pydantic import BaseModel
@@ -19,8 +19,7 @@ class Run(BaseModel):
     run_id: str
 
 
-@app.post("/")
-def index(run: Run):
+@app.post("/", status_code=202)
+async def index(run: Run, background_tasks: BackgroundTasks):
     program = programs[run.program_name]
-    program.exec(run.run_id)
-    return "OK"
+    background_tasks.add_task(program.exec, run.run_id)
