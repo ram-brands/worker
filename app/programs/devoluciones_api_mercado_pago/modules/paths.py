@@ -1,1 +1,1 @@
-DATA='data/data.csv'
+DATA = "data/data.csv"

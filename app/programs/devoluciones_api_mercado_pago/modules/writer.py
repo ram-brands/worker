@@ -1,10 +1,11 @@
-import xlsxwriter
 import os
+
+import xlsxwriter
 
 
 def write_excel(fs, header, data, name="test"):
     # Create a workbook and add a worksheet.
-    workbook = xlsxwriter.Workbook(fs.get_path(f'results/{name}.xlsx'))
+    workbook = xlsxwriter.Workbook(fs.get_path(f"results/{name}.xlsx"))
     worksheet = workbook.add_worksheet()
     # Start from the first cell. Rows and columns are zero indexed.
     row = 0
@@ -32,8 +33,9 @@ def write_csv(fs, header, data, name="errores.csv"):
         file.write(header)
         for line in data:
             line = [str(x) for x in line]
-            file.write(", ".join(line) + '\n')
+            file.write(", ".join(line) + "\n")
         print(f"Se creó el archivo {name} exitosamente")
+
 
 def erase_results(fs):
     files = os.listdir(fs.get_path(f"results"))

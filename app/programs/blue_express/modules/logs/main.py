@@ -2,12 +2,12 @@ from datetime import datetime, timedelta
 
 
 def read_log(month=None, year=2020):
-    with open("log.txt", 'r') as f:
+    with open("log.txt", "r") as f:
         times = []
         for line in f:
             line = line.strip().split(" ")[:2]
             date = datetime.strptime(line[0], "%Y-%m-%d")
-            time = line[1].split(',')[0].split(":")
+            time = line[1].split(",")[0].split(":")
             time = [int(x) for x in time]
             date = date.replace(minute=time[1], hour=time[0], second=time[2])
             if month:
@@ -62,4 +62,3 @@ if __name__ == "__main__":
     times = read_log(month, year)
     total_time = calculate_time(t, times)
     print(f"El tiempo trabajado fue de {total_time} para el {month}/{year}")
-

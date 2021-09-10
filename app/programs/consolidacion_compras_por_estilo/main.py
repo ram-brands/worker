@@ -1,15 +1,13 @@
-import time
 import sys
+import time
 
-from .modules import reader
-from .modules import writer
-from .modules import processer
+from .modules import processer, reader, writer
 
 
 def run(fs):
     start = time.time()
-    PROJECT = 'Claudia / consolidacion_compras_por_estilo'
-    VERSION = 'V1.1'
+    PROJECT = "Claudia / consolidacion_compras_por_estilo"
+    VERSION = "V1.1"
     print(f"Corriendo versión {VERSION}")
     try:
         origin_header = reader.read_origin_header(fs)
@@ -21,7 +19,6 @@ def run(fs):
         # writer.write_csv(fs, final_header, data)
         writer.write_excel(fs, final_header, data)
 
-
     except FileNotFoundError as err:
         print(err)
         print(f"No se encontró una carpeta con el nombre {err}")
@@ -32,10 +29,11 @@ def run(fs):
     end = time.time()
     print(f"Programa Finalizado en {round(end - start, 2)} segundos")
 
+
 if __name__ == "__main__":
     start = time.time()
-    PROJECT = 'Claudia'
-    VERSION = 'V1.1'
+    PROJECT = "Claudia"
+    VERSION = "V1.1"
     print(f"Corriendo versión {VERSION}")
     try:
         pass
@@ -47,7 +45,6 @@ if __name__ == "__main__":
         data = processer.add_parameters(final_header, data_header, data, parameters)
         writer.write_csv(final_header, data)
         writer.write_excel(final_header, data)
-
 
     except FileNotFoundError as err:
         print(f"No se encontró una carpeta con el nombre {err}")

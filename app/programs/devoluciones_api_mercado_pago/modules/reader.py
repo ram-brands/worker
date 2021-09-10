@@ -1,7 +1,9 @@
-from xlrd import open_workbook
-from collections import namedtuple
-from . import paths
 import os
+from collections import namedtuple
+
+from xlrd import open_workbook
+
+from . import paths
 
 
 def read_(fs, path):  # read input
@@ -12,21 +14,22 @@ def read_(fs, path):  # read input
         Attribute = namedtuple("Attribute", [])
         for row in range(s.nrows):
             col_value = []
-            col_value= [s.cell(row, col).value for col in range(s.ncols)]
+            col_value = [s.cell(row, col).value for col in range(s.ncols)]
             if row == 0:
                 header = col_value
             else:
                 pass
 
+
 def read_csv(fs, path=paths.DATA):
 
     data = {}
-    with open(fs.get_path(path), 'r') as f:
+    with open(fs.get_path(path), "r") as f:
         for line in f:
-            line = line.strip().split(',')
+            line = line.strip().split(",")
             tid = line[0]
             if tid != "TID":
-                amount = int(line[1].replace('.', ''))
+                amount = int(line[1].replace(".", ""))
                 data[tid] = amount
 
     files = os.listdir(fs.get_path(f"data"))

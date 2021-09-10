@@ -18,11 +18,13 @@ def compare_vol_weight(bill, tariffs, ref_key, ref_vol_weight):
                 bill_weight = bill[ref].weight
                 my_vol = round(ref_vol_weight[ref].total_vol, 2)
                 my_weight = round(ref_vol_weight[ref].total_weight, 2)
-                differences.append([ref, bill_vol, my_vol, bill_weight, my_weight, bill_cost, my_cost])
+                differences.append(
+                    [ref, bill_vol, my_vol, bill_weight, my_weight, bill_cost, my_cost]
+                )
                 if my_cost > bill_cost:
-                    positive_dif += (my_cost - bill_cost)
+                    positive_dif += my_cost - bill_cost
                 else:
-                    negative_dif += (bill_cost - my_cost)
+                    negative_dif += bill_cost - my_cost
         except Exception:
             error_cost += bill[ref].cost
             # if 'P' in ref:

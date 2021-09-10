@@ -23,14 +23,14 @@ def write_excel(fs, header, data, name="results"):
 
 
 def write_csv(fs, header, data, name="results.csv"):
-    header = ", ".join(header) + '\n'
+    header = ", ".join(header) + "\n"
 
     path = f"results/{name}"
     fs.makedirs(path)
 
-    with open(fs.get_path(path), 'w') as file:
+    with open(fs.get_path(path), "w") as file:
         file.write(header)
         for line in data:
             line = [str(x) for x in line]
-            file.write(", ".join(line) + '\n')
+            file.write(", ".join(line) + "\n")
         print(f"Se creó el archivo {name} exitosamente")

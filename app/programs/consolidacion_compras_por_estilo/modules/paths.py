@@ -1,1 +1,1 @@
-FORMAT_FILE = 'data/format/formato.xlsx'
+FORMAT_FILE = "data/format/formato.xlsx"

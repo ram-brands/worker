@@ -1,9 +1,6 @@
-
-
-
 def get_weight_code(basecodes, ref_vol_weight, origin, ref):
     if origin == "Santiago":
-        basecode = basecodes['santiago']
+        basecode = basecodes["santiago"]
     else:
         basecode = basecodes["regiones"]
     vol = ref_vol_weight[ref].total_vol
