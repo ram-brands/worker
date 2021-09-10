@@ -1,5 +1,5 @@
 # Python.
-__pycache__
+_pycache_
 .mypy_cache
 
 # Editor configuration.
@@ -13,3 +13,7 @@ local.py
 
 # Operating system.
 .DS_Store
+
+# Program data.
+data
+results
