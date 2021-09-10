@@ -1,0 +1,5 @@
+STOCK = 'Inventario'
+MAESTRO = 'Maestro'
+ESTOQUE = 'estoque'
+EXPORTACION = 'Exportacion'
+ATRAPERO = 'atrapero'
