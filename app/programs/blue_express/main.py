@@ -17,7 +17,11 @@ def write_differences(fs, data, name="diferencias.csv", type_="diff"):
         header = "Referencia, Volumen, Vol Análisis, Peso, Peso Análsis, Cobro, Cobro Análisis\n"
     else:
         header = "Referencia, Key\n"
-    with open(fs.get_path(f"results/{name}"), "w") as file:
+
+    path = f"results/{name}.xlsx"
+    fs.makedirs(path)
+
+    with open(fs.get_path(path), "w") as file:
         file.write(header)
         for line in data:
             line = [str(x) for x in line]
