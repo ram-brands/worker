@@ -1,9 +1,9 @@
-from fs import FileSystem
+from manager import Manager
 
 from . import main
 
 
 def exec(run_id):
-    with FileSystem(run_id) as fs:
-        main.run(fs)
-        fs.commit_zip(dir="results")
+    with Manager(run_id) as _:
+        main.run(_)
+        _.output_dir = "results"

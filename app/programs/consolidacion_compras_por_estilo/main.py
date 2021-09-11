@@ -4,20 +4,20 @@ import time
 from .modules import processer, reader, writer
 
 
-def run(fs):
+def run(_):
     start = time.time()
     PROJECT = "Claudia / consolidacion_compras_por_estilo"
     VERSION = "V1.1"
     print(f"Corriendo versión {VERSION}")
     try:
-        origin_header = reader.read_origin_header(fs)
-        final_header = reader.read_final_header(fs)
-        data_header, data, stores = reader.consolidate_data(fs, origin_header)
-        parameters = reader.read_parameters(fs)
+        origin_header = reader.read_origin_header(_)
+        final_header = reader.read_final_header(_)
+        data_header, data, stores = reader.consolidate_data(_, origin_header)
+        parameters = reader.read_parameters(_)
         final_header, data = processer.process(final_header, data_header, data, stores)
         data = processer.add_parameters(final_header, data_header, data, parameters)
-        # writer.write_csv(fs, final_header, data)
-        writer.write_excel(fs, final_header, data)
+        # writer.write_csv(_, final_header, data)
+        writer.write_excel(_, final_header, data)
 
     except FileNotFoundError as err:
         print(err)

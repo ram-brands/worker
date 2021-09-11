@@ -3,11 +3,11 @@ import os
 import xlsxwriter
 
 
-def write_excel(fs, header, data, name="test"):
+def write_excel(_, header, data, name="test"):
     # Create a workbook and add a worksheet.
     path = f"results/{name}.xlsx"
-    fs.makedirs(path)
-    workbook = xlsxwriter.Workbook(fs.get_path(path))
+    _.makedirs(path)
+    workbook = xlsxwriter.Workbook(_.get_path(path))
     worksheet = workbook.add_worksheet()
     # Start from the first cell. Rows and columns are zero indexed.
     row = 0
@@ -26,12 +26,12 @@ def write_excel(fs, header, data, name="test"):
     print(f"Se creó el archivo {name}.xlsx exitosamente")
 
 
-def write_csv(fs, header, data, name="errores.csv"):
+def write_csv(_, header, data, name="errores.csv"):
 
     path = f"results/{name}"
-    fs.makedirs(path)
+    _.makedirs(path)
 
-    with open(fs.get_path(path), "w") as file:
+    with open(_.get_path(path), "w") as file:
         file.write(header)
         for line in data:
             line = [str(x) for x in line]
@@ -39,8 +39,8 @@ def write_csv(fs, header, data, name="errores.csv"):
         print(f"Se creó el archivo {name} exitosamente")
 
 
-def erase_results(fs):
-    files = os.listdir(fs.get_path(f"results"))
+def erase_results(_):
+    files = os.listdir(_.get_path(f"results"))
     if files:
         for f in files:
-            os.remove(fs.get_path(f"results/{f}"))
+            os.remove(_.get_path(f"results/{f}"))

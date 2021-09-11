@@ -5,9 +5,9 @@ from xlrd import open_workbook
 from . import paths
 
 
-def read_BBDD_Peso_Vol(fs, path=paths.BBDD_Peso_Vol):  # Leer BBDD de peso y vol por sku
+def read_BBDD_Peso_Vol(_, path=paths.BBDD_Peso_Vol):  # Leer BBDD de peso y vol por sku
     print(f"Leyendo BBDD Peso & Vol...")
-    wb = open_workbook(fs.get_path(path))
+    wb = open_workbook(_.get_path(path))
     for s in wb.sheets():
         if s.name == "BBDD PESO&VOL":
             data = {}
@@ -30,9 +30,9 @@ def read_BBDD_Peso_Vol(fs, path=paths.BBDD_Peso_Vol):  # Leer BBDD de peso y vol
     return data
 
 
-def read_BBDD_Tarifario(fs, path=paths.BBDD_TARIFARIOS):  # Leer BBDD de tarifas por tramo
+def read_BBDD_Tarifario(_, path=paths.BBDD_TARIFARIOS):  # Leer BBDD de tarifas por tramo
     print(f"Leyendo BBDD Tarifario...")
-    wb = open_workbook(fs.get_path(path))
+    wb = open_workbook(_.get_path(path))
     for s in wb.sheets():
         if s.name == "BBDD":
             data = {}
@@ -71,9 +71,9 @@ def read_BBDD_Tarifario(fs, path=paths.BBDD_TARIFARIOS):  # Leer BBDD de tarifas
     return data, dest_code
 
 
-def read_ECOMSUR(fs, path=paths.ECOMSUR):  # Leer Factura de ECOMSUR
+def read_ECOMSUR(_, path=paths.ECOMSUR):  # Leer Factura de ECOMSUR
     print(f"Leyendo Factura ECOMSUR...")
-    wb = open_workbook(fs.get_path(path))
+    wb = open_workbook(_.get_path(path))
     for s in wb.sheets():
         if s.name == "Sheet1":
             data = {}
@@ -102,9 +102,9 @@ def read_ECOMSUR(fs, path=paths.ECOMSUR):  # Leer Factura de ECOMSUR
     return data
 
 
-def read_BBDD_Blue_Analisis(fs, path=paths.BBDD_BLUE_ANALISIS):
+def read_BBDD_Blue_Analisis(_, path=paths.BBDD_BLUE_ANALISIS):
     print(f"Leyendo BBDD Blue Analisis...")
-    wb = open_workbook(fs.get_path(path))
+    wb = open_workbook(_.get_path(path))
     for s in wb.sheets():
         if s.name == "BBDD OMS":  # Obtener dict con referencia:pedido_Id
             ref_order = {}

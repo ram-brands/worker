@@ -11,7 +11,7 @@ from .modules import compare, key_builder, paths, reader, ref_builder
 #     return vol_weight, tarrifs_path, bill, orders
 
 
-def write_differences(fs, data, name="diferencias.csv", type_="diff"):
+def write_differences(_, data, name="diferencias.csv", type_="diff"):
     if type_ == "diff":
         # header = "Referencia, Volumen, Peso, Cobro\n"
         header = "Referencia, Volumen, Vol Análisis, Peso, Peso Análsis, Cobro, Cobro Análisis\n"
@@ -19,9 +19,9 @@ def write_differences(fs, data, name="diferencias.csv", type_="diff"):
         header = "Referencia, Key\n"
 
     path = f"results/{name}.xlsx"
-    fs.makedirs(path)
+    _.makedirs(path)
 
-    with open(fs.get_path(path), "w") as file:
+    with open(_.get_path(path), "w") as file:
         file.write(header)
         for line in data:
             line = [str(x) for x in line]
@@ -29,15 +29,15 @@ def write_differences(fs, data, name="diferencias.csv", type_="diff"):
         print(f"Se creó el archivo {name} exitosamente")
 
 
-def run(fs):
+def run(_):
     start = time.time()
     PROJECT = "Blue Express"
     VERSION = "V1.1"
     print(f"Corriendo versión {VERSION}")
     try:
-        bill = reader.read_ECOMSUR(fs)
-        vol_weight = reader.read_BBDD_Peso_Vol(fs)
-        tariffs, dest_code = reader.read_BBDD_Tarifario(fs)
+        bill = reader.read_ECOMSUR(_)
+        vol_weight = reader.read_BBDD_Peso_Vol(_)
+        tariffs, dest_code = reader.read_BBDD_Tarifario(_)
         (
             ref_order,
             order_sku,
@@ -46,7 +46,7 @@ def run(fs):
             city_zone,
             initials_region_code,
             initials_to_zone,
-        ) = reader.read_BBDD_Blue_Analisis(fs)
+        ) = reader.read_BBDD_Blue_Analisis(_)
         ref_sku = ref_builder.build_ref_sku(
             bill, ref_order, order_sku
         )  # dict: {reference: [sku, sku, ...]}
@@ -64,8 +64,8 @@ def run(fs):
         differences, ref_errors = compare.compare_vol_weight(
             bill, tariffs, ref_key, ref_vol_weight
         )
-        write_differences(fs, differences)
-        write_differences(fs, ref_errors, "errores_ref.csv", "error")
+        write_differences(_, differences)
+        write_differences(_, ref_errors, "errores_ref.csv", "error")
 
     except FileNotFoundError as err:
         print(f"No se encontró una carpeta con el nombre {err}")

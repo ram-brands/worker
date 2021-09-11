@@ -1,22 +1,22 @@
 import logging
+import time
 
-from fs import FileSystem
+from manager import Manager
 
-logger = logging.getLogger(__name__)
+from status import Status
 
 
 def exec(run_id):
-    #########################
-    # Mount the file system #
-    #########################
+    ##########################
+    # Initialize the manager #
+    ##########################
 
-    with FileSystem(run_id) as fs:
-
+    with Manager(run_id) as _:
         ##############
         # Read files #
         ##############
 
-        with open(fs.get_path("some_folder/data.xls"), mode="rb") as file:
+        with open(_.get_path("some_folder/data.xls"), mode="rb") as file:
             some_data = file.read()
 
         ####################
@@ -24,6 +24,11 @@ def exec(run_id):
         ####################
 
         # Do stuff...
+        time.sleep(5)
+
+        # Log stuff...
+        _.log("Example log.")
+        _.warning("Example warning.")
 
         ###############
         # Write files #
@@ -31,17 +36,23 @@ def exec(run_id):
 
         path = "output/results.csv"
 
-        fs.makedirs(path)
+        _.makedirs(path)
 
-        with open(fs.get_path(path), mode="wb") as file:
+        with open(_.get_path(path), mode="wb") as file:
             file.write(b"Hello, world!")
 
         #####################
         # Commit the output #
         #####################
 
-        # The files will be sent to the remote storage.
-        fs.commit_zip(dir="output")
+        # The files will be saved to the remote storage.
+        _.output_dir = "output"
+
+        ##################
+        # Set the status #
+        ##################
+
+        _.status = Status.WARNING
 
     # Upon exiting the context manager
     # the temporary file system will be destroyed.

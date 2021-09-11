@@ -3,7 +3,7 @@ import time
 from . import modules
 
 
-def run(fs):
+def run(_):
     DIRECTORY_MATRIZ = "data"
 
     PVD_PATH = "data/ProcesoVentasDiarias.xlsx"
@@ -16,10 +16,10 @@ def run(fs):
     print(f"Corriendo versión {v}")
     # log(0, v, PROJECT)
     try:
-        header, data = modules.read_PVD(fs, PVD_PATH)
-        param = modules.read_param(fs, PARAMETERS_PATH)
+        header, data = modules.read_PVD(_, PVD_PATH)
+        param = modules.read_param(_, PARAMETERS_PATH)
         header, data = modules.create_macro(header, data, param)
-        modules.write(fs, header, data, OUTPUT_FILE_NAME)
+        modules.write(_, header, data, OUTPUT_FILE_NAME)
         # log(1, v, PROJECT)
     except FileNotFoundError as err:
         print(err)

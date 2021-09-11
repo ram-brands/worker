@@ -8,9 +8,9 @@ from dateutil.relativedelta import relativedelta
 from xlrd import open_workbook
 
 
-def read_PVD(fs, path):  # Leer Proceso Ventas Diarias
+def read_PVD(_, path):  # Leer Proceso Ventas Diarias
     print(f"Leyendo Proceso Venta Diarias...")
-    wb = open_workbook(fs.get_path(path))
+    wb = open_workbook(_.get_path(path))
     for s in wb.sheets():
         if s.name == "ProcesoVentasDiarias":
             data = []
@@ -39,7 +39,7 @@ def read_PVD(fs, path):  # Leer Proceso Ventas Diarias
     return header, data
 
 
-def read_param(fs, path):  # Leer parametros
+def read_param(_, path):  # Leer parametros
     print(f"Leyendo Parametros...")
     P = namedtuple(
         "Parameters",
@@ -68,7 +68,7 @@ def read_param(fs, path):  # Leer parametros
     tiendas_dict = {}
     tipo_cambio_dict = {}
     tipo_doc_dict = {}
-    wb = open_workbook(fs.get_path(path))
+    wb = open_workbook(_.get_path(path))
     for s in wb.sheets():
         if s.name == "Hoja1":
             data = []
@@ -523,23 +523,23 @@ def create_macro(header1, data, param):  # realizar el trabajo de la macro
 
 
 def write(
-    fs, header, data, name="out", limit=None
+    _, header, data, name="out", limit=None
 ):  # Crear csv para poder copiar en matriz
     print(f"Escribiendo resultados...")
     # header = ','.join(header)
     now = datetime.now()
     dt_string = now.strftime("%m-%d-%Y %H-%M")
     name += f" {dt_string}"
-    write_excel(fs, header, data, name)
+    write_excel(_, header, data, name)
     print(f"Se creó con éxito el archivo {name}.xlsx")
     print("*" * 50, "\n")
 
 
-def write_excel(fs, header, data, name):
+def write_excel(_, header, data, name):
     # Create a workbook and add a worksheet.
     path = f"results/{name}.xlsx"
-    fs.makedirs(path)
-    workbook = xlsxwriter.Workbook(fs.get_path(path))
+    _.makedirs(path)
+    workbook = xlsxwriter.Workbook(_.get_path(path))
     worksheet = workbook.add_worksheet()
     # Start from the first cell. Rows and columns are zero indexed.
     row = 0

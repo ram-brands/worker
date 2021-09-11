@@ -11,9 +11,9 @@ from . import paths
 # a parámetros de la J a la L.
 
 
-def read_data(fs, format_header, path):  #
+def read_data(_, format_header, path):  #
     print(f"Leyendo {path}")
-    wb = open_workbook(fs.get_path(f"{path}"))
+    wb = open_workbook(_.get_path(f"{path}"))
     data = []
     header = None
     stores = []
@@ -38,11 +38,9 @@ def read_data(fs, format_header, path):  #
     return header, data, stores
 
 
-def read_parameters(
-    fs, path=paths.FORMAT_FILE
-):  # read parameters in sheet '3.PARAMETROS'
+def read_parameters(_, path=paths.FORMAT_FILE):  # read parameters in sheet '3.PARAMETROS'
     print(f"Leyendo {path}")
-    wb = open_workbook(fs.get_path(f"{path}"))
+    wb = open_workbook(_.get_path(f"{path}"))
     Parameters = namedtuple(
         "Parameters", ["subclass", "firstletter", "department", "store", "arrival"]
     )
@@ -142,9 +140,9 @@ def read_parameters(
     return parameters
 
 
-def read_origin_header(fs, path=paths.FORMAT_FILE):  #
+def read_origin_header(_, path=paths.FORMAT_FILE):  #
     print(f"Leyendo {path}")
-    wb = open_workbook(fs.get_path(f"{path}"))
+    wb = open_workbook(_.get_path(f"{path}"))
     for s in wb.sheets():
         if s.name == "1. ARCHIVO COMPRA":
             for row in range(s.nrows):
@@ -156,9 +154,9 @@ def read_origin_header(fs, path=paths.FORMAT_FILE):  #
     return header
 
 
-def read_final_header(fs, path=paths.FORMAT_FILE):  #
+def read_final_header(_, path=paths.FORMAT_FILE):  #
     print(f"Leyendo {path}")
-    wb = open_workbook(fs.get_path(f"{path}"))
+    wb = open_workbook(_.get_path(f"{path}"))
     for s in wb.sheets():
         if s.name == "2. CONTROL COMPRA":
             for row in range(s.nrows):
@@ -171,9 +169,9 @@ def read_final_header(fs, path=paths.FORMAT_FILE):  #
 
 
 def consolidate_data(
-    fs, origin_header, dir_name="data"
+    _, origin_header, dir_name="data"
 ):  # consolidate all files in dir if format fits
-    dir_ = fs.get_path(dir_name)
+    dir_ = _.get_path(dir_name)
     files = [
         f
         for f in listdir(dir_)
@@ -188,7 +186,7 @@ def consolidate_data(
     File = namedtuple("File", ["header", "data", "path"])
     for f in files:
 
-        h, partial_data, s = read_data(fs, origin_header, f"{dir_name}/{f}")
+        h, partial_data, s = read_data(_, origin_header, f"{dir_name}/{f}")
         required_values = [
             "STYLE",
             "COLOR",

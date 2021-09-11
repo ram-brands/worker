@@ -55,26 +55,26 @@ def compare_styles(categories):
     return data
 
 
-def compare(fs, header, data):
+def compare(_, header, data):
     categories = _filter(header, data)
     data = compare_categories(categories)
     header = ["Category", "AvailableQty", "stock sap"]
     # write(header, data)
-    writer.write_excel(fs, header, data, "categorias")
+    writer.write_excel(_, header, data, "categorias")
 
     data = compare_styles(categories)
     header = ["Category", "style-color", "AvailableQty", "stock sap"]
     # write(header, data, 'style.csv')
-    writer.write_excel(fs, header, data, "estilo-color")
+    writer.write_excel(_, header, data, "estilo-color")
 
 
-def write(fs, header, data, name="test.csv"):
+def write(_, header, data, name="test.csv"):
     header = ", ".join(header) + "\n"
 
     path = f"results/{name}"
-    fs.makedirs(path)
+    _.makedirs(path)
 
-    with open(fs.get_path(path), "w") as file:
+    with open(_.get_path(path), "w") as file:
         file.write(header)
         for line in data:
             line = [str(x) for x in line]

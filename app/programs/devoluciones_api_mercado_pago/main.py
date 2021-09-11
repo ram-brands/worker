@@ -4,7 +4,7 @@ import time
 from .modules import api, reader, writer
 
 
-def run(fs):
+def run(_):
     start = time.time()
     PROJECT = "Devolución Masiva Mercado Pago"
     VERSION = "V1.2"
@@ -12,7 +12,7 @@ def run(fs):
     try:
         approved = 0
         errors = []
-        data = reader.read_csv(fs)
+        data = reader.read_csv(_)
         for tid in data:
             amount = data[tid]
             status, error = api.refund(tid, amount)
@@ -23,9 +23,9 @@ def run(fs):
         if errors:
             print("ALERTA: Se creó archivo con errores.")
             header = "TID, MONTO\n"
-            writer.write_csv(fs, header, errors)
+            writer.write_csv(_, header, errors)
         else:
-            writer.erase_results(fs)
+            writer.erase_results(_)
 
     except FileNotFoundError as err:
         print(f"No se encontró una carpeta con el nombre {err}")

@@ -3,29 +3,29 @@ import time
 from .modules import build_cruce, compare, reader, writer
 
 
-def read_files(fs):
-    stock = reader.read_stock(fs)
-    estoque = reader.read_estoque(fs)
-    maestro = reader.read_maestro(fs)
-    exportacion = reader.read_exportacion(fs)
-    atrapero = reader.read_atrapero(fs)
+def read_files(_):
+    stock = reader.read_stock(_)
+    estoque = reader.read_estoque(_)
+    maestro = reader.read_maestro(_)
+    exportacion = reader.read_exportacion(_)
+    atrapero = reader.read_atrapero(_)
 
     return stock, estoque, maestro, exportacion, atrapero
 
 
-def run(fs):
+def run(_):
     start = time.time()
     PROJECT = "Cruce Pagina E-Commerce"
     VERSION = "V1.1"
     print(f"Corriendo versión {VERSION}")
     try:
         pass
-        stock, estoque, maestro, exportacion, atrapero = read_files(fs)
+        stock, estoque, maestro, exportacion, atrapero = read_files(_)
         header, data = build_cruce.build_cruce(
             estoque, stock, maestro, exportacion, atrapero
         )
-        compare.compare(fs, header, data)
-        writer.write_excel(fs, header, data, "cruce")
+        compare.compare(_, header, data)
+        writer.write_excel(_, header, data, "cruce")
     except KeyError:
         pass
     except FileNotFoundError as err:

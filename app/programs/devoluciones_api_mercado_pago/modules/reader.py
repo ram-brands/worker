@@ -6,9 +6,9 @@ from xlrd import open_workbook
 from . import paths
 
 
-def read_(fs, path):  # read input
+def read_(_, path):  # read input
     print(f"Leyendo XXXX...")
-    wb = open_workbook(fs.get_path(f"{path}"))
+    wb = open_workbook(_.get_path(f"{path}"))
     for s in wb.sheets():
         data = {}
         Attribute = namedtuple("Attribute", [])
@@ -21,10 +21,10 @@ def read_(fs, path):  # read input
                 pass
 
 
-def read_csv(fs, path=paths.DATA):
+def read_csv(_, path=paths.DATA):
 
     data = {}
-    with open(fs.get_path(path), "r") as f:
+    with open(_.get_path(path), "r") as f:
         for line in f:
             line = line.strip().split(",")
             tid = line[0]
@@ -32,10 +32,10 @@ def read_csv(fs, path=paths.DATA):
                 amount = int(line[1].replace(".", ""))
                 data[tid] = amount
 
-    files = os.listdir(fs.get_path(f"data"))
+    files = os.listdir(_.get_path(f"data"))
     if files:
         for f in files:
-            os.remove(fs.get_path(f"data/{f}"))
+            os.remove(_.get_path(f"data/{f}"))
 
     return data
 

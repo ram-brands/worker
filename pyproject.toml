@@ -32,7 +32,7 @@ multi_line_output = 3
 sections = ["FUTURE", "STDLIB", "FASTAPI", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
 default_section = "THIRDPARTY"
 known_fastapi = "fastapi"
-known_first_party = ["env", "programs", "main", "storage", "utils"]
+known_first_party = ["env", "programs", "main", "status", "storage", "utils"]
 
 [build-system]
 requires = ["poetry>=1.1.7"]
