@@ -17,6 +17,8 @@ RUNS_S3_BUCKET = os.environ.get("RUNS_S3_BUCKET")
 
 AWS_LOCATION = os.environ.get("AWS_LOCATION", "")
 
+BACKEND_URL = os.environ.get("BACKEND_URL")
+
 
 ###################
 # LOCAL OVERWRITE #

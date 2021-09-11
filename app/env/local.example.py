@@ -9,3 +9,5 @@ AWS_REGION = "example-region"
 RUNS_S3_BUCKET = "example-bucket"
 
 AWS_LOCATION = "anonymous/"
+
+BACKEND_URL = ""

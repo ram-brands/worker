@@ -3,9 +3,9 @@ from . import (
     calculo_quinta_peru,
     consolidacion_compras_por_estilo,
     cruce_pagina_ecommerce,
-    revision_bbdd_ventas_y_stock,
     devoluciones_api_mercado_pago,
     example,
+    revision_bbdd_ventas_y_stock,
 )
 
 programs = dict(
