@@ -55,9 +55,9 @@ class Manager:
             self.status = Status.SERVER_ERROR
 
         try:
+            self.commit_output()
             shutil.rmtree(self.root)
 
-            self.commit_output()
             self.commit_logs()
             self.commit_warnings()
 
@@ -103,9 +103,9 @@ class Manager:
         commit_dir = os.path.join(self.root, self.output_dir)
 
         with ZipFile(file=buffer, mode="w") as zipfile:
-            for self.output_dir, _, paths in os.walk(commit_dir):
+            for dir, _, paths in os.walk(commit_dir):
                 for path in paths:
-                    complete_path = os.path.join(self.output_dir, path)
+                    complete_path = os.path.join(dir, path)
                     base = os.path.basename(path)
                     zipfile.write(filename=complete_path, arcname=base)
 
