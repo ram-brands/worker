@@ -171,11 +171,13 @@ def read_final_header(_, path=paths.FORMAT_FILE):  #
 def consolidate_data(
     _, origin_header, dir_name="data"
 ):  # consolidate all files in dir if format fits
-    dir_ = _.get_path(dir_name)
+    # dir_ = _.get_path(dir_name)
+    # for f in listdir(_.get_path(dir_)):
+    #     print(f) (isfile(join(dir_, f))) and 
     files = [
         f
-        for f in listdir(_.get_path(dir_))
-        if (isfile(_.get_path(join(dir_, f)))) and ("~" not in f) and (".xls" in f)
+        for f in listdir(_.get_path(dir_name))
+        if ("~" not in f) and (".xls" in f)
     ]
     data = []
     stores = None
