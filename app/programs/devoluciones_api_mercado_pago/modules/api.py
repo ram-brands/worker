@@ -1,8 +1,9 @@
 import requests
+import env
 
 
 def refund(TID, AMOUNT):
-    TOKEN = "APP_USR-3553132201566615-112011-b2ff946812a9dac9b957f97dc8ff72fe__LA_LD__-285362448"
+    TOKEN = env.API_MP_TOKEN
     API_URL = f"https://api.mercadopago.com/v1/payments/{TID}/refunds"
 
     headers = {
