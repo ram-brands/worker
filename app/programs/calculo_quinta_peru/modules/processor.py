@@ -49,7 +49,7 @@ def tax(income):
 
     brackets = [22000, 88000, 154000, 198000]  # first 22,000  # next  66,000
 
-    base_tax = [1760, 9240, 11220, 8800]  # Base tax for bracket
+    base_tax = [1760, 11000, 22220, 31020]  # Base tax for bracket
     i = bisect(brackets, income)
     if not i:
         return (income * rates[0]) / 100
