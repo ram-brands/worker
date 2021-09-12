@@ -66,7 +66,7 @@ class Manager:
             raise Exception(e) from e
 
         finally:
-            confimation_url = f"{env.BACKEND_URL}/{self.run_id}/confirmation"
+            confimation_url = f"{env.BACKEND_URL}/runs/{self.run_id}/confirmation"
             requests.post(url=confimation_url, json=dict(status=self.status.value))
 
     def mount(self):
