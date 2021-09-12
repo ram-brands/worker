@@ -174,8 +174,8 @@ def consolidate_data(
     dir_ = _.get_path(dir_name)
     files = [
         f
-        for f in listdir(dir_)
-        if (isfile(join(dir_, f))) and ("~" not in f) and (".xls" in f)
+        for f in listdir(_.get_path(dir_))
+        if (isfile(_.get_path(join(dir_, f)))) and ("~" not in f) and (".xls" in f)
     ]
     data = []
     stores = None
