@@ -1,6 +1,6 @@
 from bisect import bisect
 from collections import namedtuple
-
+from status import Status
 from . import params
 
 
@@ -14,7 +14,7 @@ def get_variable_pay(base_pay, total_pay):  # variable = total - base
     return variable_pay
 
 
-def get_taxes(total_pay, base_pay, variable_pay):  # get taxes from brackets
+def get_taxes(_, total_pay, base_pay, variable_pay):  # get taxes from brackets
     Taxes = namedtuple(
         "Taxes",
         ["dni", "name", "pay", "base", "variable", "projection", "taxable", "tax"],
@@ -28,7 +28,8 @@ def get_taxes(total_pay, base_pay, variable_pay):  # get taxes from brackets
             variable = variable_pay[dni].pay
             name = total_pay[dni].name
         except KeyError:
-            print(f"ALERTA: No esta presente algún dato para el DNI {dni}")
+            _.warning(f"ALERTA: No esta presente algún dato para el DNI {dni}")
+            _.status = Status.WARNING
             flag = False
         if flag and pay > 2500:
             base_projection = pay * 12

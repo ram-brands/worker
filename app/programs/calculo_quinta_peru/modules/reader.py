@@ -6,7 +6,7 @@ from xlrd import open_workbook
 
 
 def read_base_pay(_, path="data/Datos Planilla Activos PB.xlsx"):  #
-    print(f"Leyendo base pay...")
+    _.log(f"Leyendo base pay...")
     with open_workbook(_.get_path(path)) as wb:
         for s in wb.sheets():
             base_pay = {}
@@ -38,7 +38,7 @@ def read_base_pay(_, path="data/Datos Planilla Activos PB.xlsx"):  #
 
 
 def read_total_pay(_, path="data/Planilla Haberes Julio-2021 - Peru Brands.xlsx"):  #
-    print(f"Leyendo total pay...")
+    _.log(f"Leyendo total pay...")
     with open_workbook(_.get_path(path)) as wb:
         for s in wb.sheets():
             if s.name == "Planilla":
