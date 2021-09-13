@@ -1,14 +1,14 @@
-# import reader as r
+from status import Status
 
 
 def process(
-    final_header, header, data, stores
+    _, final_header, header, data, stores
 ):  # Format to final header and then split by store
     # final_header = ['PAÍS', 'EMPRESA', 'REF EMBARQUE', 'CANAL', 'NOMBRE DE TIENDAS', 'JERARQUIA', 'DEPARTAMENTO', 'CLASE', 'GENERO', 'MARCA', 'AÑO ON FLOOR', 'STYLE', 'DESPROD', 'TEMPORADA', 'AÑO TEMPORADA', 'DELIVERY', 'ON FLOOR ORIGINAL', 'ON FLOOR REAL', 'MES ONFLOOR REAL', 'PO#', 'UNIDADES', 'FOB USD']
     final_data = []
     for file_ in data:
         header = file_.header
-        print(f"Processing file named: {file_.path}")
+        _.log(f"Processing file named: {file_.path}")
         for line in file_.data:
             new_line = [""] * len(final_header)
 
@@ -42,8 +42,9 @@ def process(
                 ]
                 # new_line[final_header.index("CLASE")] = line[header.index('PRODUCT SUBCLASS')]
             except Exception:
-                print(f"error with {file_.path}")
+                _.warning(f"error with {file_.path}")
                 # print(header)
+                _.status = Status.CLIENT_ERROR
                 exit()
 
             for store in stores:
@@ -59,7 +60,7 @@ def process(
 
 
 def add_parameters(
-    final_header, data_header, data, parameters
+    _, final_header, data_header, data, parameters
 ):  # Add value de parameter fields
     final_data = []
     fl_errors = set()
@@ -117,20 +118,10 @@ def add_parameters(
             pass
 
     if errors:
-        print(f"ERROR: Estas subclases no se encuentran en los parametros:")
+        _.warning(f"ERROR: Estas subclases no se encuentran en los parametros:")
         # for e in errors:
         #     print(e)
-        print(errors)
+        _.warning(errors)
+        _.status = Status.WARNING
 
     return data
-
-
-if __name__ == "__main__":
-    pass
-    # path = 'data/MN HO21 (PS22) MARKET ORDER CHART.xlsx'
-    # h, d, s = r.read_(path)
-    # data = process(h, d, s)
-    # # p = read_parameters(path)
-    # # print(p)
-    # print(data)
-    # # consolidate_data()

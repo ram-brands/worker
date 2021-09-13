@@ -4,6 +4,8 @@ from os.path import isfile, join
 
 from xlrd import open_workbook
 
+from status import Status
+
 from . import paths
 
 # El único cambio es la clase, que se debe ir a buscar a parámetros,
@@ -12,7 +14,7 @@ from . import paths
 
 
 def read_data(_, format_header, path):  #
-    print(f"Leyendo {path}")
+    _.log(f"Leyendo {path}")
     wb = open_workbook(_.get_path(f"{path}"))
     data = []
     header = None
@@ -39,7 +41,7 @@ def read_data(_, format_header, path):  #
 
 
 def read_parameters(_, path=paths.FORMAT_FILE):  # read parameters in sheet '3.PARAMETROS'
-    print(f"Leyendo {path}")
+    _.log(f"Leyendo {path}")
     wb = open_workbook(_.get_path(f"{path}"))
     Parameters = namedtuple(
         "Parameters", ["subclass", "firstletter", "department", "store", "arrival"]
@@ -141,7 +143,7 @@ def read_parameters(_, path=paths.FORMAT_FILE):  # read parameters in sheet '3.P
 
 
 def read_origin_header(_, path=paths.FORMAT_FILE):  #
-    print(f"Leyendo {path}")
+    _.log(f"Leyendo {path}")
     wb = open_workbook(_.get_path(f"{path}"))
     for s in wb.sheets():
         if s.name == "1. ARCHIVO COMPRA":
@@ -155,7 +157,7 @@ def read_origin_header(_, path=paths.FORMAT_FILE):  #
 
 
 def read_final_header(_, path=paths.FORMAT_FILE):  #
-    print(f"Leyendo {path}")
+    _.log(f"Leyendo {path}")
     wb = open_workbook(_.get_path(f"{path}"))
     for s in wb.sheets():
         if s.name == "2. CONTROL COMPRA":
@@ -247,19 +249,8 @@ def consolidate_data(
     # print(f'stores: {stores}, {x}')
     # print(f'c: {c}')
     if format_error:
-        print("ERROR: Los siguientes archivos tienen error de formato:")
+        _.warning("ERROR: Los siguientes archivos tienen error de formato:")
         for e in format_error:
-            print(e)
+            _.warning(e)
+        _.status = Status.WARNING
     return header, data, required_stores
-
-
-if __name__ == "__main__":
-    pass
-    # path = 'data/MN HO21 (PS22) MARKET ORDER CHART.xlsx'
-    path = "data/format/formato.xlsx"
-    # data = read_(path)
-    header = read_origin_header(path)
-    # p = read_parameters(path)
-    # print(p.subclass)
-    # print(data)
-    # consolidate_data()
