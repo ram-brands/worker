@@ -1,5 +1,6 @@
 from status import Status
 
+
 def process(
     _, final_header, header, data, stores
 ):  # Format to final header and then split by store

@@ -1,8 +1,10 @@
 from collections import namedtuple
 from os import listdir
 from os.path import isfile, join
-from status import Status
+
 from xlrd import open_workbook
+
+from status import Status
 
 from . import paths
 
