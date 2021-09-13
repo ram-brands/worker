@@ -21,7 +21,7 @@ def write_excel(_, header, data, name="results"):
         row += 1
 
     workbook.close()
-    print(f"Se creó el archivo {name}.xlsx exitosamente")
+    _.log(f"Se creó el archivo {name}.xlsx exitosamente")
 
 
 def write_csv(_, header, data, name="results.csv"):
@@ -35,4 +35,4 @@ def write_csv(_, header, data, name="results.csv"):
         for line in data:
             line = [str(x) for x in line]
             file.write(", ".join(line) + "\n")
-        print(f"Se creó el archivo {name} exitosamente")
+        _.log(f"Se creó el archivo {name} exitosamente")
