@@ -1,7 +1,7 @@
 import os
 import sys
 from collections import namedtuple
-
+from status import Status
 from xlrd import open_workbook
 
 from . import paths
@@ -21,13 +21,14 @@ def get_file_name(_, key_word):
             file_ = f
             return file_
     if not file_:
-        print(f"ERROR: No hay archivo con palabra clave {key_word}")
+        _.warning(f"ERROR: No hay archivo con palabra clave {key_word}")
+        _.status = Status.CLIENT_ERROR
         exit()
 
 
 def read_stock(_, path=paths.STOCK):  # Leer BBDD de peso y vol por sku
     file_ = get_file_name(_, path)
-    print(f"Leyendo Inventario...")
+    _.log(f"Leyendo Inventario...")
     wb = open_workbook(_.get_path(f"data/{file_}"))
     for s in wb.sheets():
         unique_code_stock = {}
@@ -62,7 +63,7 @@ def read_maestro(_, path=paths.MAESTRO):  # Leer Maestro para obtener {estilo-co
     if ".txt" in file_:
         maestro = read_maestro_txt(_, file_)
     else:
-        print(f"Leyendo Maestro...")
+        _.log(f"Leyendo Maestro...")
         wb = open_workbook(_.get_path(f"data/{file_}"))
         for s in wb.sheets():
             style_color = set()
@@ -92,7 +93,7 @@ def read_maestro(_, path=paths.MAESTRO):  # Leer Maestro para obtener {estilo-co
 
 
 def read_maestro_txt(_, path):  # Leer Maestro para obtener {estilo-color: sku}
-    print(f"Leyendo Maestro txt...")
+    _.log(f"Leyendo Maestro txt...")
     with open(_.get_path(path), "r", encoding="utf16", errors="ignore") as f:
         # contents = f.read()
         # contents = contents.decode('utf-16', 'ignore')
@@ -128,7 +129,7 @@ def read_estoque(
     _, path=paths.ESTOQUE
 ):  # Consolidar estoque con saldo mayor a 0, {UC:stock}
     file_ = get_file_name(_, path)
-    print(f"Leyendo Estoque...")
+    _.log(f"Leyendo Estoque...")
     wb = open_workbook(_.get_path(f"data/{file_}"))
     estoque = {}
     for s in wb.sheets():
@@ -156,7 +157,7 @@ def read_estoque(
 
 def read_exportacion(_, path=paths.EXPORTACION):  # Obtner {sku: pim}
     file_ = get_file_name(_, path)
-    print(f"Leyendo Exportacion...")
+    _.log(f"Leyendo Exportacion...")
     wb = open_workbook(_.get_path(f"data/{file_}"))
     exportacion = {}
     for s in wb.sheets():
@@ -182,7 +183,7 @@ def read_exportacion(_, path=paths.EXPORTACION):  # Obtner {sku: pim}
 
 def read_atrapero(_, path=paths.ATRAPERO):  # Obtener si sku esta prendido
     file_ = get_file_name(_, path)
-    print(f"Leyendo atrapero...")
+    _.log(f"Leyendo atrapero...")
     wb = open_workbook(_.get_path(f"data/{file_}"))
     atrapero = {}
     for s in wb.sheets():

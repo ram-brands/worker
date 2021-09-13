@@ -6,9 +6,8 @@ def get_sku_from_uc(uc):
         return l[1] + "-" + l[2]
 
 
-def build_cruce(estoque, stock, maestro, exportacion, atrapero):
-    pass
-    print("Realizando Cruce de información...")
+def build_cruce(_, estoque, stock, maestro, exportacion, atrapero):
+    _.log("Realizando Cruce de información...")
     header = [
         "AvailableQuantity",
         "stock sap",
