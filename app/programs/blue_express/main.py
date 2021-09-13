@@ -1,6 +1,8 @@
 import sys
 import time
 
+from status import Status
+
 from .modules import compare, key_builder, paths, reader, ref_builder
 
 # def read_files():
@@ -48,9 +50,9 @@ def run(_):
             initials_to_zone,
         ) = reader.read_BBDD_Blue_Analisis(_)
         ref_sku = ref_builder.build_ref_sku(
-            bill, ref_order, order_sku
+            _, bill, ref_order, order_sku
         )  # dict: {reference: [sku, sku, ...]}
-        ref_vol_weight = ref_builder.build_ref_vol_weight(ref_sku, vol_weight)
+        ref_vol_weight = ref_builder.build_ref_vol_weight(_, ref_sku, vol_weight)
         ref_key = key_builder.build_key2(
             bill,
             ref_order,
@@ -62,15 +64,15 @@ def run(_):
             initials_to_zone,
         )
         differences, ref_errors = compare.compare_vol_weight(
-            bill, tariffs, ref_key, ref_vol_weight
+            _, bill, tariffs, ref_key, ref_vol_weight
         )
         write_differences(_, differences)
         write_differences(_, ref_errors, "errores_ref.csv", "error")
 
     except FileNotFoundError as err:
-        print(f"No se encontró una carpeta con el nombre {err}")
+        _.warning(f"No se encontró una carpeta con el nombre {err}")
     end = time.time()
-    print(f"Programa Finalizado en {round(end - start, 2)} segundos")
+    _.log(f"Programa Finalizado en {round(end - start, 2)} segundos")
 
 
 if __name__ == "__main__":

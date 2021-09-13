@@ -11,3 +11,5 @@ RUNS_S3_BUCKET = "example-bucket"
 AWS_LOCATION = "anonymous/"
 
 BACKEND_URL = ""
+
+API_MP_TOKEN = ""

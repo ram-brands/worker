@@ -1,4 +1,4 @@
-def compare_vol_weight(bill, tariffs, ref_key, ref_vol_weight):
+def compare_vol_weight(_, bill, tariffs, ref_key, ref_vol_weight):
     differences = []
     negative_dif = 0
     count_dif = 0
@@ -37,10 +37,10 @@ def compare_vol_weight(bill, tariffs, ref_key, ref_vol_weight):
             # ref_errors.append([ref, formatted_key])
             ref_errors.append([ref])
     if len(ref_errors):
-        print(f"Cantidad de ref con error: {len(ref_errors)}")
-        print(f"Costo total con ref con error: {error_cost}")
+        _.warning(f"Cantidad de ref con error: {len(ref_errors)}")
+        _.warning(f"Costo total con ref con error: {error_cost}")
     # print(f"Diferencia en {count_dif}/{len(bill)} referencias")
-    print(f"Una diferencia negativa de: ${negative_dif}")
-    print(f"Una diferencia postiva de: ${positive_dif}")
-    print(f"Una diferencia neta de: ${negative_dif - positive_dif}")
+    _.warning(f"Una diferencia negativa de: ${negative_dif}")
+    _.warning(f"Una diferencia positiva de: ${positive_dif}")
+    _.warning(f"Una diferencia neta de: ${negative_dif - positive_dif}")
     return differences, ref_errors

@@ -79,7 +79,7 @@ def write(_, header, data, name="test.csv"):
         for line in data:
             line = [str(x) for x in line]
             file.write(", ".join(line) + "\n")
-        print(f"Se creó el archivo {name} exitosamente")
+        _.log(f"Se creó el archivo {name} exitosamente")
 
 
 if __name__ == "__main__":

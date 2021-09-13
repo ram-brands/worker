@@ -2,10 +2,12 @@ from collections import namedtuple
 
 import unidecode
 
+from status import Status
+
 from . import cost_calculator as cc
 
 
-def build_ref_sku(bill, ref_order, order_sku):
+def build_ref_sku(_, bill, ref_order, order_sku):
     ref_sku = {}  # {ref:[sku, sku, ...]}
     order_error = set()
     for ref in bill:
@@ -18,12 +20,13 @@ def build_ref_sku(bill, ref_order, order_sku):
         except KeyError:
             order_error.add(ref)
     if order_error:
-        print("Error en ordenes OMS en las siguentes ref:")
-        print(order_error)
+        _.warning("Error en ordenes OMS en las siguentes ref:")
+        _.warning(order_error)
+        _.status = Status.WARNING
     return ref_sku
 
 
-def build_ref_origin_dest_zone(bill, ref_to_order, order_sku, store_city, city_zone):
+def build_ref_origin_dest_zone(_, bill, ref_to_order, order_sku, store_city, city_zone):
     pass
     dest_error = set()
     ref_origin_dest_zone = {}
@@ -46,8 +49,9 @@ def build_ref_origin_dest_zone(bill, ref_to_order, order_sku, store_city, city_z
             dest_error.add(destination)
             pass
     if dest_error:
-        print("Error con destinos en BBDD Destino en:")
-        print(dest_error)
+        _.warning("Error con destinos en BBDD Destino en:")
+        _.warning(dest_error)
+        _.status = Status.WARNING
     return ref_origin_dest_zone
 
 
@@ -62,7 +66,7 @@ def build_ref_to_order(ref_order, bill):
     return ref_to_order
 
 
-def build_ref_vol_weight(ref_sku, vol_weight):
+def build_ref_vol_weight(_, ref_sku, vol_weight):
     Attributes = namedtuple("Attributes", ["total_vol", "total_weight"])
     ref_weight_vol = {}
     error_sku = set()
@@ -74,8 +78,9 @@ def build_ref_vol_weight(ref_sku, vol_weight):
         ref_weight_vol[ref] = Attributes(total_vol, total_weight)
         error_sku |= error
     if error_sku:
-        print("Error en sku, probablemente de BBDD PB Limpia en:")
-        print(error_sku)
+        _.warning("Error en sku, probablemente de BBDD PB Limpia en:")
+        _.warning(error_sku)
+        _.status = Status.WARNING
     return ref_weight_vol
 
 

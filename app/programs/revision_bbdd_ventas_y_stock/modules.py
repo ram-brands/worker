@@ -7,9 +7,11 @@ import xlsxwriter
 from dateutil.relativedelta import relativedelta
 from xlrd import open_workbook
 
+from status import Status
+
 
 def read_PVD(_, path):  # Leer Proceso Ventas Diarias
-    print(f"Leyendo Proceso Venta Diarias...")
+    _.log(f"Leyendo Proceso Venta Diarias...")
     wb = open_workbook(_.get_path(path))
     for s in wb.sheets():
         if s.name == "ProcesoVentasDiarias":
@@ -40,7 +42,7 @@ def read_PVD(_, path):  # Leer Proceso Ventas Diarias
 
 
 def read_param(_, path):  # Leer parametros
-    print(f"Leyendo Parametros...")
+    _.log(f"Leyendo Parámetros...")
     P = namedtuple(
         "Parameters",
         [
@@ -154,8 +156,8 @@ def read_param(_, path):  # Leer parametros
     return param
 
 
-def create_macro(header1, data, param):  # realizar el trabajo de la macro
-    print(f"Creando macro...")
+def create_macro(_, header1, data, param):  # realizar el trabajo de la macro
+    _.log(f"Creando macro...")
     # header1 = input header  |  header2 = output header
     header2 = "Key 1	Empresa	DocEntry	ObjType	Tipo	Fecha	Día	Mes	Año	DesBode	Nombre de Tienda	Folio	CodCaja	Canal	CodProd	DesProd	Descripcion Grupo	SubGrupo	Jerarquia	Departamento	Clase	SubClase	Cantidad	Venta Neta	Costo Unitario	Dcto aplicado	Genero	Desc Genero	Temporada	Desc Temp	Año Temporada	Temp / Año	Mes Temporada	Style	Color	Talla	Delivery	Número Semana	CodVendedor	Nombre Vendedor	Stock	Antiguedad	Marca	LP2	Hora Venta	Column1	Costo de Venta	Contrib	Margen	Nombre cliente	Rut	CCosto	Moneda	Pais	DescripcionCCosto	Marca Corr	FOB	NombrePromo	PorcentajePromo	Redondeo Descuento	Tipo de Promociones	VendedorPromo	ValorPromo	UsuarioSAP	TipoCambio	FechaCon	REFEMB	PROV	TipoDocto	Precio Venta Full	Stock al Costo	Venta Pesos	Costo Pesos	Contrib Pesos	Stock PVP	Id Q	Id $	Id C$	Compara"
     header2 = header2.split("\t")
@@ -273,7 +275,8 @@ def create_macro(header1, data, param):  # realizar el trabajo de la macro
                     descripcion = "SAGA FALABELLA GUESS PERÚ"
                 tienda = param.descripcionC[descripcion][0]
             else:
-                print("ALERTA: Tipo VENTA sin DescripciónCCosto")
+                _.warning("ALERTA: Tipo VENTA sin DescripciónCCosto")
+                _.status = Status.WARNING
                 tienda = "S/I"
         else:
             desbode = line[desbode_index].upper()
@@ -284,7 +287,8 @@ def create_macro(header1, data, param):  # realizar el trabajo de la macro
                     desbode = "GUESS JEANS TREBOL"
                 tienda = param.descripcionC[desbode][0]
             else:
-                print("ALERTA: Tipo STOCK sin DesBode")
+                _.warning("ALERTA: Tipo STOCK sin DesBode")
+                _.status = Status.WARNING
                 tienda = "S/I"
         # CANAL
         if tienda == "S/I":
@@ -336,8 +340,8 @@ def create_macro(header1, data, param):  # realizar el trabajo de la macro
             elif obj_type == "13":
                 contrib = round(venta_neta - costo_venta, 2)
             else:
-                print(f"ALERTA: Obj Type extraño: {obj_type}")
-
+                _.warning(f"ALERTA: Obj Type extraño: {obj_type}")
+                _.status = Status.WARNING
             stock_costo = 0
             stock_pvp = 0
         else:
@@ -348,7 +352,8 @@ def create_macro(header1, data, param):  # realizar el trabajo de la macro
             elif pais in ["Chile", "Panamá"]:
                 stock_pvp = stock_pvp / 1.19
             else:
-                print(f"ALERTA: País no reconocido: {pais}")
+                _.warning(f"ALERTA: País no reconocido: {pais}")
+                _.status = Status.WARNING
         if venta_neta:
             margen = str(round((contrib / venta_neta) * 100)) + "%"
         else:
@@ -499,16 +504,22 @@ def create_macro(header1, data, param):  # realizar el trabajo de la macro
         # exit()
 
     # Ver si hay errores de llaves para parametros
-    if error_keys_canal or error_keys_genero or error_keys_temporada:
-        print("ERROR: Revisar llaves.")
+    if (
+        error_keys_canal
+        or error_keys_genero
+        or error_keys_temporada
+        or error_keys_llave_emp
+    ):
+        _.status = Status.WARNING
+        _.warning("ERROR: Revisar llaves.")
     if error_keys_canal:
-        print(f"CANAL: {error_keys_canal}")
+        _.warning(f"CANAL: {error_keys_canal}")
     if error_keys_temporada:
-        print(f"TEMPORADA: {error_keys_temporada}")
+        _.warning(f"TEMPORADA: {error_keys_temporada}")
     if error_keys_genero:
-        print(f"GENERO: {error_keys_genero}")
+        _.warning(f"GENERO: {error_keys_genero}")
     if error_keys_llave_emp:
-        print(f"LLAVE EMP: {error_keys_llave_emp}")
+        _.warning(f"LLAVE EMP: {error_keys_llave_emp}")
 
     # for line in new_data:
     #     for col in range(len(line)):
@@ -525,13 +536,13 @@ def create_macro(header1, data, param):  # realizar el trabajo de la macro
 def write(
     _, header, data, name="out", limit=None
 ):  # Crear csv para poder copiar en matriz
-    print(f"Escribiendo resultados...")
+    _.log(f"Escribiendo resultados...")
     # header = ','.join(header)
     now = datetime.now()
     dt_string = now.strftime("%m-%d-%Y %H-%M")
     name += f" {dt_string}"
     write_excel(_, header, data, name)
-    print(f"Se creó con éxito el archivo {name}.xlsx")
+    _.log(f"Se creó con éxito el archivo {name}.xlsx")
     print("*" * 50, "\n")
 
 

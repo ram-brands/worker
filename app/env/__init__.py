@@ -19,6 +19,8 @@ AWS_LOCATION = os.environ.get("AWS_LOCATION", "")
 
 BACKEND_URL = os.environ.get("BACKEND_URL")
 
+API_MP_TOKEN = os.environ.get("API_MP_TOKEN")
+
 
 ###################
 # LOCAL OVERWRITE #

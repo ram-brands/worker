@@ -2,11 +2,14 @@ from collections import namedtuple
 
 from xlrd import open_workbook
 
+from status import Status
+
 from . import paths
 
 
 def read_BBDD_Peso_Vol(_, path=paths.BBDD_Peso_Vol):  # Leer BBDD de peso y vol por sku
     print(f"Leyendo BBDD Peso & Vol...")
+    _.log(f"Leyendo BBDD Peso & Vol...")
     wb = open_workbook(_.get_path(path))
     for s in wb.sheets():
         if s.name == "BBDD PESO&VOL":
@@ -32,6 +35,7 @@ def read_BBDD_Peso_Vol(_, path=paths.BBDD_Peso_Vol):  # Leer BBDD de peso y vol 
 
 def read_BBDD_Tarifario(_, path=paths.BBDD_TARIFARIOS):  # Leer BBDD de tarifas por tramo
     print(f"Leyendo BBDD Tarifario...")
+    _.log(f"Leyendo BBDD Tarifario...")
     wb = open_workbook(_.get_path(path))
     for s in wb.sheets():
         if s.name == "BBDD":
@@ -62,6 +66,13 @@ def read_BBDD_Tarifario(_, path=paths.BBDD_TARIFARIOS):  # Leer BBDD de tarifas 
                         print(
                             f"error: no hay costo para llave {origin},{geo_destiny_group}"
                         )
+                        _.warning(
+                            f"error: no hay costo para llave {origin},{geo_destiny_group}"
+                        )
+                        _.log(
+                            f"error: no hay costo para llave {origin},{geo_destiny_group}"
+                        )
+                        _.status = Status.WARNING
                     key = Key(origin, geo_destiny_group, code, weight_code)
                     data[key] = cost
 
@@ -73,6 +84,7 @@ def read_BBDD_Tarifario(_, path=paths.BBDD_TARIFARIOS):  # Leer BBDD de tarifas 
 
 def read_ECOMSUR(_, path=paths.ECOMSUR):  # Leer Factura de ECOMSUR
     print(f"Leyendo Factura ECOMSUR...")
+    _.log(f"Leyendo Factura ECOMSUR...")
     wb = open_workbook(_.get_path(path))
     for s in wb.sheets():
         if s.name == "Sheet1":
@@ -104,6 +116,7 @@ def read_ECOMSUR(_, path=paths.ECOMSUR):  # Leer Factura de ECOMSUR
 
 def read_BBDD_Blue_Analisis(_, path=paths.BBDD_BLUE_ANALISIS):
     print(f"Leyendo BBDD Blue Analisis...")
+    _.log(f"Leyendo BBDD Blue Analisis...")
     wb = open_workbook(_.get_path(path))
     for s in wb.sheets():
         if s.name == "BBDD OMS":  # Obtener dict con referencia:pedido_Id
