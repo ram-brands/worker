@@ -1,3 +1,4 @@
+import logging
 import os
 import shutil
 from io import BytesIO, StringIO
@@ -8,6 +9,8 @@ import requests
 import env
 from status import Status
 from storage import Storage
+
+logger = logging.getLogger(__name__)
 
 TMP_DIR = lambda dir: os.path.join(".", "tmp", dir)
 
@@ -94,14 +97,14 @@ class Manager:
             self.logs_string += f"{msg}\n"
 
         if stdout:
-            print(msg)
+            logger.info(msg)
 
     def warning(self, msg, file=True, stdout=True):
         if file:
             self.warnings_string += f"{msg}\n"
 
         if stdout:
-            print(msg)
+            logger.info(msg)
 
     def commit_output(self):
         """
