@@ -1,5 +1,5 @@
 import time
-
+from status import Status
 from . import modules
 
 
@@ -13,21 +13,20 @@ def run(_):
     PROJECT = "BBDD Ventas y Stock"
     start = time.time()
     v = "V1.8"
-    print(f"Corriendo versión {v}")
+    _.log(f"Corriendo versión {v}")
     # log(0, v, PROJECT)
     try:
         header, data = modules.read_PVD(_, PVD_PATH)
         param = modules.read_param(_, PARAMETERS_PATH)
-        header, data = modules.create_macro(header, data, param)
+        header, data = modules.create_macro(_, header, data, param)
         modules.write(_, header, data, OUTPUT_FILE_NAME)
-        # log(1, v, PROJECT)
     except FileNotFoundError as err:
-        print(err)
-        print(f"No se encontró una carpeta con el nombre {DIRECTORY_MATRIZ}")
-        # log(2, v, PROJECT)
+        _.log(err)
+        _.warning(f"No se encontró una carpeta con el nombre {DIRECTORY_MATRIZ}")
+        _.status = Status.CLIENT_ERROR
     end = time.time()
     total_time = round(end - start, 2)
-    print(
+    _.log(
         f"Programa Finalizado en {int(total_time//60)}:{f'{round(total_time%60):02}'} minutos"
     )
 
