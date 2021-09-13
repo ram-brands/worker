@@ -40,7 +40,7 @@ def read_PVD(_, path):  # Leer Proceso Ventas Diarias
 
 
 def read_param(_, path):  # Leer parametros
-    _.log(f"Leyendo Parametros...")
+    _.log(f"Leyendo Parámetros...")
     P = namedtuple(
         "Parameters",
         [
