@@ -89,11 +89,19 @@ class Manager:
         dir = os.path.dirname(complete_path)
         os.makedirs(dir, exist_ok=True)
 
-    def log(self, msg, level=None):
-        self.logs_string += f"{msg}\n"
+    def log(self, msg, file=True, stdout=True):
+        if file:
+            self.logs_string += f"{msg}\n"
 
-    def warning(self, msg, level=None):
-        self.warnings_string += f"{msg}\n"
+        if stdout:
+            print(msg)
+
+    def warning(self, msg, file=True, stdout=True):
+        if file:
+            self.warnings_string += f"{msg}\n"
+
+        if stdout:
+            print(msg)
 
     def commit_output(self):
         """
