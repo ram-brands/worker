@@ -1,6 +1,8 @@
 import sys
 import time
+
 from status import Status
+
 from .modules import compare, key_builder, paths, reader, ref_builder
 
 # def read_files():

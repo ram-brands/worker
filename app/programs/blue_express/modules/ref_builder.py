@@ -1,6 +1,8 @@
 from collections import namedtuple
-from status import Status
+
 import unidecode
+
+from status import Status
 
 from . import cost_calculator as cc
 

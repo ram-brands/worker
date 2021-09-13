@@ -1,6 +1,8 @@
 from collections import namedtuple
-from status import Status
+
 from xlrd import open_workbook
+
+from status import Status
 
 from . import paths
 
@@ -64,8 +66,12 @@ def read_BBDD_Tarifario(_, path=paths.BBDD_TARIFARIOS):  # Leer BBDD de tarifas 
                         print(
                             f"error: no hay costo para llave {origin},{geo_destiny_group}"
                         )
-                        _.warning(f"error: no hay costo para llave {origin},{geo_destiny_group}")
-                        _.log(f"error: no hay costo para llave {origin},{geo_destiny_group}")
+                        _.warning(
+                            f"error: no hay costo para llave {origin},{geo_destiny_group}"
+                        )
+                        _.log(
+                            f"error: no hay costo para llave {origin},{geo_destiny_group}"
+                        )
                         _.status = Status.WARNING
                     key = Key(origin, geo_destiny_group, code, weight_code)
                     data[key] = cost

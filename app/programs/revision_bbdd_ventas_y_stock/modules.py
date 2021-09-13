@@ -2,10 +2,12 @@ import csv
 import time
 from collections import namedtuple
 from datetime import datetime
-from status import Status
+
 import xlsxwriter
 from dateutil.relativedelta import relativedelta
 from xlrd import open_workbook
+
+from status import Status
 
 
 def read_PVD(_, path):  # Leer Proceso Ventas Diarias
@@ -502,7 +504,12 @@ def create_macro(_, header1, data, param):  # realizar el trabajo de la macro
         # exit()
 
     # Ver si hay errores de llaves para parametros
-    if error_keys_canal or error_keys_genero or error_keys_temporada or error_keys_llave_emp:
+    if (
+        error_keys_canal
+        or error_keys_genero
+        or error_keys_temporada
+        or error_keys_llave_emp
+    ):
         _.status = Status.WARNING
         _.warning("ERROR: Revisar llaves.")
     if error_keys_canal:

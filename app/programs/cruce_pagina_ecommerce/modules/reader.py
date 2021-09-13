@@ -1,8 +1,10 @@
 import os
 import sys
 from collections import namedtuple
-from status import Status
+
 from xlrd import open_workbook
+
+from status import Status
 
 from . import paths
 

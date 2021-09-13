@@ -1,6 +1,8 @@
 from bisect import bisect
 from collections import namedtuple
+
 from status import Status
+
 from . import params
 
 
