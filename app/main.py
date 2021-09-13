@@ -19,7 +19,7 @@ class Run(BaseModel):
     run_id: str
 
 
-@app.post("/", status_code=202)
+@app.post("/", status_code=200)
 async def index(run: Run, background_tasks: BackgroundTasks):
     program = programs[run.program_name]
     background_tasks.add_task(program.exec, run.run_id)
