@@ -1,3 +1,5 @@
+import threading as th
+
 import boto3
 from botocore.client import Config as BotoConfig
 
@@ -5,12 +7,16 @@ import env
 
 
 class Singleton(type):
+    lock = th.Lock()
+
     def __call__(cls, *args, **kwargs):
-        cls._instance = (
-            cls._instance
-            if hasattr(cls, "_instance")
-            else super().__call__(*args, **kwargs)
-        )
+        with cls.lock:
+            cls._instance = (
+                cls._instance
+                if hasattr(cls, "_instance")
+                else super().__call__(*args, **kwargs)
+            )
+
         return cls._instance
 
 
