@@ -23,7 +23,7 @@ def write_excel(_, header, data, name="test"):
         row += 1
 
     workbook.close()
-    print(f"Se creó el archivo {name}.xlsx exitosamente")
+    _.log(f"Se creó el archivo {name}.xlsx exitosamente")
 
 
 def write_csv(_, header, data, name="errores.csv"):
@@ -36,11 +36,11 @@ def write_csv(_, header, data, name="errores.csv"):
         for line in data:
             line = [str(x) for x in line]
             file.write(", ".join(line) + "\n")
-        print(f"Se creó el archivo {name} exitosamente")
+        _.log(f"Se creó el archivo {name} exitosamente")
 
 
-def erase_results(_):
-    files = os.listdir(_.get_path(f"results"))
-    if files:
-        for f in files:
-            os.remove(_.get_path(f"results/{f}"))
+# def erase_results(_):
+#     files = os.listdir(_.get_path(f"results"))
+#     if files:
+#         for f in files:
+#             os.remove(_.get_path(f"results/{f}"))
