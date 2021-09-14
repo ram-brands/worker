@@ -7,7 +7,7 @@ from . import paths
 
 
 def read_(_, path):  # read input
-    print(f"Leyendo XXXX...")
+    _.log(f"Leyendo data...")
     wb = open_workbook(_.get_path(f"{path}"))
     for s in wb.sheets():
         data = {}
@@ -22,7 +22,6 @@ def read_(_, path):  # read input
 
 
 def read_csv(_, path=paths.DATA):
-
     data = {}
     with open(_.get_path(path), "r") as f:
         for line in f:
@@ -31,12 +30,10 @@ def read_csv(_, path=paths.DATA):
             if tid != "TID":
                 amount = int(line[1].replace(".", ""))
                 data[tid] = amount
-
-    files = os.listdir(_.get_path(f"data"))
-    if files:
-        for f in files:
-            os.remove(_.get_path(f"data/{f}"))
-
+    # files = os.listdir(_.get_path(f"data"))
+    # if files:
+    #     for f in files:
+    #         os.remove(_.get_path(f"data/{f}"))
     return data
 
 
