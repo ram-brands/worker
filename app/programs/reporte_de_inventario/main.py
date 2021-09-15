@@ -1,7 +1,7 @@
 import sys
 import time
 
-from modules import cross, reader, writer
+from .modules import cross, reader, writer
 
 from status import Status
 
