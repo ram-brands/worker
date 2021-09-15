@@ -31,13 +31,19 @@ def cross(physical, sap):
 
 
 def get_summary(categories):
-    category_1_name = 'Faltantes estan en sap y faltan en fisico'
-    category_2_name = 'Faltantes resta entre fisico y sap'
-    category_3_name = 'Negativos estan en sap y faltan en fisico'
-    category_4_name = 'sobrantes estan en fisico y faltan en SAP'
-    category_5_name = 'Sobrantes resta entre fisico y sap'
+    category_1_name = "Faltantes estan en sap y faltan en fisico"
+    category_2_name = "Faltantes resta entre fisico y sap"
+    category_3_name = "Negativos estan en sap y faltan en fisico"
+    category_4_name = "sobrantes estan en fisico y faltan en SAP"
+    category_5_name = "Sobrantes resta entre fisico y sap"
 
-    categories_names = [category_1_name, category_2_name, category_3_name, category_4_name, category_5_name]
+    categories_names = [
+        category_1_name,
+        category_2_name,
+        category_3_name,
+        category_4_name,
+        category_5_name,
+    ]
 
     total = 0
     summary = []
@@ -49,6 +55,6 @@ def get_summary(categories):
             count += x[1]
         summary.append([name, count])
         total += count
-    summary.append(['Total general', total])
+    summary.append(["Total general", total])
 
     return summary

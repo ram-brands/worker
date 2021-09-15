@@ -1,5 +1,7 @@
-from xlrd import open_workbook
 from collections import namedtuple
+
+from xlrd import open_workbook
+
 from . import paths
 
 
@@ -11,11 +13,11 @@ def read_sap(_, path=paths.SAP_PATH):  # Read sap stock [[sku, stock]]
         Attribute = namedtuple("item", ["sku", "stock"])
         for row in range(s.nrows):
             col_value = []
-            col_value= [s.cell(row, col).value for col in range(s.ncols)]
+            col_value = [s.cell(row, col).value for col in range(s.ncols)]
             if row == 0:
                 header = col_value
-                sku_index = col_value.index('ItemCode')
-                stock_index = col_value.index('Stock')
+                sku_index = col_value.index("ItemCode")
+                stock_index = col_value.index("Stock")
             else:
                 sku = col_value[sku_index]
                 stock = col_value[stock_index]
@@ -36,7 +38,7 @@ def read_physical(_, path=paths.PHYSICAL_PATH):  # Read sap stock [[sku, stock]]
             Attribute = namedtuple("item", ["sku", "stock"])
             for row in range(s.nrows):
                 col_value = []
-                col_value= [s.cell(row, col).value for col in range(s.ncols)]
+                col_value = [s.cell(row, col).value for col in range(s.ncols)]
                 if row == 0:
                     header = col_value
                 else:

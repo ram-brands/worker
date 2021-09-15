@@ -1,27 +1,28 @@
-import time
 import sys
+import time
+
+from modules import cross, reader, writer
+
 from status import Status
-from modules import reader, cross, writer
 
 
 def run(_):
     start = time.time()
-    PROJECT = 'Reporte Inventario'
-    VERSION = 'V1.1'
+    PROJECT = "Reporte Inventario"
+    VERSION = "V1.1"
     _.log(f"Corriendo {PROJECT} versión {VERSION}")
     try:
         physical = reader.read_physical(_)
         sap = reader.read_sap(_)
         categories = cross.cross(physical, sap)
         x = 1
-        header = ['SKU', 'Cantidad']
+        header = ["SKU", "Cantidad"]
         for c in categories:
-            writer.write_excel(_, header, c, f'categoria_{x}')
+            writer.write_excel(_, header, c, f"categoria_{x}")
             x += 1
         summary = cross.get_summary(categories)
-        header = ['Etiqueta de fila', 'Suma de brecha']
-        writer.write_excel(_, header, summary, 'resumen')
-
+        header = ["Etiqueta de fila", "Suma de brecha"]
+        writer.write_excel(_, header, summary, "resumen")
 
     except FileNotFoundError as err:
         _.status = Status.CLIENT_ERROR
