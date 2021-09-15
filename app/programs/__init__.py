@@ -5,6 +5,7 @@ from . import (
     cruce_pagina_ecommerce,
     devoluciones_api_mercado_pago,
     example,
+    reporte_de_inventario,
     revision_bbdd_ventas_y_stock,
 )
 
@@ -15,5 +16,6 @@ programs = dict(
     blue_express=blue_express,
     cruce_pagina_ecommerce=cruce_pagina_ecommerce,
     revision_bbdd_ventas_y_stock=revision_bbdd_ventas_y_stock,
+    reporte_de_inventario=reporte_de_inventario,
     example=example,
 )
