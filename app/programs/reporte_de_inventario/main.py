@@ -1,9 +1,9 @@
 import sys
 import time
 
-from .modules import cross, reader, writer
-
 from status import Status
+
+from .modules import cross, reader, writer
 
 
 def run(_):
