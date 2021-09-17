@@ -1,4 +1,7 @@
-def cross(physical, sap):
+from status import Status
+
+
+def cross(_, physical, sap, maestro):
     category_1 = []
     category_2 = []
     category_3 = []
@@ -26,11 +29,25 @@ def cross(physical, sap):
                     category_5.append([sku, physical[sku] - sap[sku]])
 
     categories = [category_1, category_2, category_3, category_4, category_5]
+    for cat in categories:
+        for line in cat:
+            sku = line[0]
+            stock = line[1]
+            if sku in maestro:
+                price = maestro[sku]
+                total_price = round(stock * price)
+            else:
+                price = ""
+                total_price = ""
+                _.warning(f"El sku {sku} no está en el maestro.")
+                _.status = Status.WARNING
+            line.append(price)
+            line.append(total_price)
 
     return categories
 
 
-def get_summary(categories):
+def get_summary(_, categories):
     category_1_name = "Faltantes estan en sap y faltan en fisico"
     category_2_name = "Faltantes resta entre fisico y sap"
     category_3_name = "Negativos estan en sap y faltan en fisico"
@@ -45,16 +62,21 @@ def get_summary(categories):
         category_5_name,
     ]
 
-    total = 0
+    total_stock = 0
+    total_price = 0
     summary = []
     for i in range(len(categories)):
         c = categories[i]
         name = categories_names[i]
-        count = 0
+        stock = 0
+        price = 0
         for x in c:
-            count += x[1]
-        summary.append([name, count])
-        total += count
-    summary.append(["Total general", total])
+            stock += x[1]
+            if x[3]:
+                price += x[3]
+        summary.append([name, stock, price])
+        total_stock += stock
+        total_price += price
+    summary.append(["Total general", total_stock, total_price])
 
     return summary
