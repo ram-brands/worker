@@ -5,9 +5,15 @@ from xlrd import open_workbook
 from . import paths
 
 
-def read_sap(_, store, path=paths.SAP_PATH):  # Read sap stock [[sku, stock]]
+def read_sap(_, store, keyword=paths.SAP_KEYWORD):  # Read sap stock [[sku, stock]]
     _.log(f"Leyendo sap stock...")
-    wb = open_workbook(_.get_path(f"data/{store}/{path}"))
+    file_name = [f for f in listdir(_.get_path(f'data/{store}')) if ("~" not in f) and (keyword in f)]
+    if file_name:
+        file_name = file_name[0]
+    else:
+        _.log(f'Incorrect format with store {store} and keyword {keyword}')
+        raise FileNotFoundError
+    wb = open_workbook(_.get_path(f"data/{store}/{file_name}"))
     for s in wb.sheets():
         data = {}
         Attribute = namedtuple("item", ["sku", "stock"])
@@ -29,9 +35,15 @@ def read_sap(_, store, path=paths.SAP_PATH):  # Read sap stock [[sku, stock]]
     return data
 
 
-def read_physical(_, store, path=paths.PHYSICAL_PATH):  # Read sap stock [[sku, stock]]
+def read_physical(_, store, keyword=paths.PHYSICAL_KEYWORD):  # Read sap stock [[sku, stock]]
     _.log(f"Leyendo stock físico...")
-    wb = open_workbook(_.get_path(f"data/{store}/{path}"))
+    file_name = [f for f in listdir(_.get_path(f'data/{store}')) if ("~" not in f) and (keyword in f)]
+    if file_name:
+        file_name = file_name[0]
+    else:
+        _.log(f'Incorrect format with store {store} and keyword {keyword}')
+        raise FileNotFoundError
+    wb = open_workbook(_.get_path(f"data/{store}/{file_name}"))
     for s in wb.sheets():
         if True:
             data = {}
