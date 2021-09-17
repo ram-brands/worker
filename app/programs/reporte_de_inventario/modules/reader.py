@@ -1,6 +1,6 @@
 from collections import namedtuple
 from os import listdir
-
+from status import Status
 from xlrd import open_workbook
 
 from . import paths
@@ -33,10 +33,11 @@ def read_sap(_, store, keyword=paths.SAP_KEYWORD):  # Read sap stock [[sku, stoc
                 sku = col_value[sku_index]
                 stock = col_value[stock_index]
                 if sku:
-                    if int(sku) in data:
-                        data[int(sku)] += int(stock)
+                    formatted_sku = str(sku).replace(".0", "")
+                    if formatted_sku in data:
+                        data[formatted_sku] += int(stock)
                     else:
-                        data[int(sku)] = int(stock)
+                        data[formatted_sku] = int(stock)
     return data
 
 
@@ -67,20 +68,48 @@ def read_physical(
                 else:
                     for sku in col_value:
                         if sku:
-                            if int(sku) in data:
-                                data[int(sku)] += 1
+                            formatted_sku = str(sku).replace(".0", "")
+                            if formatted_sku in data:
+                                data[formatted_sku] += 1
                             else:
-                                data[int(sku)] = 1
+                                data[formatted_sku] = 1
     return data
 
 
+def read_maestro(_, keyword=paths.MAESTRO_KEYWORD):  # Read maestro stock [[sku, price]]
+    _.log(f"Leyendo precios del maestro...")
+    file_name = [
+        f
+        for f in listdir(_.get_path(f"data"))
+        if ("~" not in f) and (keyword in f)
+    ]
+    if file_name:
+        file_name = file_name[0]
+    else:
+        _.log(f"Incorrect format with maestro and keyword {keyword}")
+        raise FileNotFoundError
+    _.log(f"data/{file_name}")
+    wb = open_workbook(_.get_path(f"data/{file_name}"))
+    for s in wb.sheets():
+        data = {}
+        for row in range(s.nrows):
+            col_value = []
+            col_value = [s.cell(row, col).value for col in range(s.ncols)]
+            if row == 0:
+                header = col_value
+                sku_index = col_value.index("Número de artículo")
+                price_index = col_value.index("PMP - Costo Real")
+            else:
+                sku = col_value[sku_index]
+                price = col_value[price_index]
+                if sku:
+                    formatted_sku = str(sku).replace(".0", "")
+                    data[formatted_sku] = float(price)
+    return data
+
 def get_all_stores(_, dir_name="data"):
-    # _.log('Get all stores')
-    # print('get all stores')
-    # all_stores = listdir(_.get_path(dir_name))
     all_stores = [
         s for s in listdir(_.get_path(dir_name)) if ("~" not in s) and ("." not in s)
     ]
-    # print(all_stores)
     _.log(all_stores)
     return all_stores

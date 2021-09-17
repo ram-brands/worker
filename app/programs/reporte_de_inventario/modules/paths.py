@@ -2,4 +2,5 @@
 # SAP_PATH = "Libro1.xlsx"
 
 PHYSICAL_KEYWORD = "Inventario Fisico"
-SAP_KEYWORD = "Libro1"
+SAP_KEYWORD = "Sap Stock"
+MAESTRO_KEYWORD = 'Maestro'
