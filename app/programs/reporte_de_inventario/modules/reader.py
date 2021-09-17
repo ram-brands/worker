@@ -1,13 +1,13 @@
 from collections import namedtuple
-
+from os import listdir
 from xlrd import open_workbook
 
 from . import paths
 
 
-def read_sap(_, path=paths.SAP_PATH):  # Read sap stock [[sku, stock]]
+def read_sap(_, store, path=paths.SAP_PATH):  # Read sap stock [[sku, stock]]
     _.log(f"Leyendo sap stock...")
-    wb = open_workbook(_.get_path(f"{path}"))
+    wb = open_workbook(_.get_path(f"data/{store}/{path}"))
     for s in wb.sheets():
         data = {}
         Attribute = namedtuple("item", ["sku", "stock"])
@@ -29,9 +29,9 @@ def read_sap(_, path=paths.SAP_PATH):  # Read sap stock [[sku, stock]]
     return data
 
 
-def read_physical(_, path=paths.PHYSICAL_PATH):  # Read sap stock [[sku, stock]]
+def read_physical(_, store, path=paths.PHYSICAL_PATH):  # Read sap stock [[sku, stock]]
     _.log(f"Leyendo stock físico...")
-    wb = open_workbook(_.get_path(f"{path}"))
+    wb = open_workbook(_.get_path(f"data/{store}/{path}"))
     for s in wb.sheets():
         if True:
             data = {}
@@ -49,3 +49,12 @@ def read_physical(_, path=paths.PHYSICAL_PATH):  # Read sap stock [[sku, stock]]
                             else:
                                 data[int(sku)] = 1
     return data
+
+def get_all_stores(_, dir_name='data'):
+    # _.log('Get all stores')
+    # print('get all stores')
+    # all_stores = listdir(_.get_path(dir_name))
+    all_stores = [s for s in listdir(_.get_path(dir_name)) if ("~" not in s) and ("." not in s)]
+    # print(all_stores)
+    _.log(all_stores)
+    return all_stores
