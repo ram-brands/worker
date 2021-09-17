@@ -1,2 +1,3 @@
-PHYSICAL_PATH = "data/Inventario Fisico.xlsx"
-SAP_PATH = "data/Libro1.xlsx"
+PHYSICAL_KEYWORD = "Inventario Fisico"
+SAP_KEYWORD = "Sap Stock"
+MAESTRO_KEYWORD = "Maestro"

@@ -12,17 +12,20 @@ def run(_):
     VERSION = "V1.1"
     _.log(f"Corriendo {PROJECT} versión {VERSION}")
     try:
-        physical = reader.read_physical(_)
-        sap = reader.read_sap(_)
-        categories = cross.cross(physical, sap)
-        x = 1
-        header = ["SKU", "Cantidad"]
-        for c in categories:
-            writer.write_excel(_, header, c, f"categoria_{x}")
-            x += 1
-        summary = cross.get_summary(categories)
-        header = ["Etiqueta de fila", "Suma de brecha"]
-        writer.write_excel(_, header, summary, "resumen")
+        all_stores = reader.get_all_stores(_)
+        maestro = reader.read_maestro(_)
+        for store in all_stores:
+            physical = reader.read_physical(_, store)
+            sap = reader.read_sap(_, store)
+            categories = cross.cross(_, physical, sap, maestro)
+            x = 1
+            header = ["SKU", "Cantidad", "Costo Unit", "Costo Total"]
+            for c in categories:
+                writer.write_excel(_, header, c, f"{store}-categoria_{x}")
+                x += 1
+            summary = cross.get_summary(_, categories)
+            header = ["Etiqueta de fila", "Suma de brecha", "Suma de costo total"]
+            writer.write_excel(_, header, summary, f"{store}-resumen")
 
     except FileNotFoundError as err:
         _.status = Status.CLIENT_ERROR
