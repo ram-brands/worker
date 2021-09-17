@@ -1,7 +1,9 @@
 from collections import namedtuple
 from os import listdir
-from status import Status
+
 from xlrd import open_workbook
+
+from status import Status
 
 from . import paths
 
@@ -79,9 +81,7 @@ def read_physical(
 def read_maestro(_, keyword=paths.MAESTRO_KEYWORD):  # Read maestro stock [[sku, price]]
     _.log(f"Leyendo precios del maestro...")
     file_name = [
-        f
-        for f in listdir(_.get_path(f"data"))
-        if ("~" not in f) and (keyword in f)
+        f for f in listdir(_.get_path(f"data")) if ("~" not in f) and (keyword in f)
     ]
     if file_name:
         file_name = file_name[0]
@@ -106,6 +106,7 @@ def read_maestro(_, keyword=paths.MAESTRO_KEYWORD):  # Read maestro stock [[sku,
                     formatted_sku = str(sku).replace(".0", "")
                     data[formatted_sku] = float(price)
     return data
+
 
 def get_all_stores(_, dir_name="data"):
     all_stores = [

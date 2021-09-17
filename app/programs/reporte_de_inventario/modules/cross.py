@@ -37,8 +37,8 @@ def cross(_, physical, sap, maestro):
                 price = maestro[sku]
                 total_price = round(stock * price)
             else:
-                price = ''
-                total_price = ''
+                price = ""
+                total_price = ""
                 _.warning(f"El sku {sku} no está en el maestro.")
                 _.status = Status.WARNING
             line.append(price)
