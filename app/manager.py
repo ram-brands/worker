@@ -113,7 +113,7 @@ class Manager:
         buffer = BytesIO()
         commit_dir = os.path.join(self.root, self.output_dir)
 
-        with ZipFile(file=buffer, mode="wb") as zipfile:
+        with ZipFile(file=buffer, mode="w") as zipfile:
             for dir, _, paths in os.walk(commit_dir):
                 for path in paths:
                     complete_path = os.path.join(dir, path)
