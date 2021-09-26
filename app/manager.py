@@ -117,7 +117,9 @@ class Manager:
             for dir, _, paths in os.walk(commit_dir):
                 for path in paths:
                     complete_path = os.path.join(dir, path)
-                    zipfile.write(filename=complete_path, arcname=complete_path)
+                    relative_path = os.path.relpath(complete_path, self.root)
+
+                    zipfile.write(filename=complete_path, arcname=relative_path)
 
         buffer.seek(0)
         return self.storage.save(path=self.output_path, file=buffer)
