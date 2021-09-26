@@ -3,7 +3,7 @@ import xlsxwriter
 
 def write_excel(_, header, data, name="test"):
     # Create a workbook and add a worksheet.
-    path = f"results/tiendas/{name}.xlsx"
+    path = f"results/{name}.xlsx"
     _.makedirs(path)
     workbook = xlsxwriter.Workbook(_.get_path(path))
     worksheet = workbook.add_worksheet()
