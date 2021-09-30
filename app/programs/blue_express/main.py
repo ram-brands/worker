@@ -13,7 +13,7 @@ from .modules import compare, key_builder, paths, reader, ref_builder
 #     return vol_weight, tarrifs_path, bill, orders
 
 
-def write_differences(_, data, name="diferencias.csv", type_="diff"):
+def write_differences(_, data, name="diferencias", type_="diff"):
     if type_ == "diff":
         # header = "Referencia, Volumen, Peso, Cobro\n"
         header = "Referencia, Volumen, Vol Análisis, Peso, Peso Análsis, Cobro, Cobro Análisis\n"
@@ -67,7 +67,7 @@ def run(_):
             _, bill, tariffs, ref_key, ref_vol_weight
         )
         write_differences(_, differences)
-        write_differences(_, ref_errors, "errores_ref.csv", "error")
+        write_differences(_, ref_errors, "errores_ref", "error")
 
     except FileNotFoundError as err:
         _.warning(f"No se encontró una carpeta con el nombre {err}")
