@@ -3,7 +3,7 @@ import time
 
 from status import Status
 
-from .modules import compare, key_builder, paths, reader, ref_builder
+from .modules import compare, key_builder, paths, reader, ref_builder, writer
 
 # def read_files():
 #     vol_weight = reader.read_BBDD_Peso_Vol(paths.BBDD_Peso_Vol)
@@ -17,18 +17,30 @@ def write_differences(_, data, name="diferencias", type_="diff"):
     if type_ == "diff":
         # header = "Referencia, Volumen, Peso, Cobro\n"
         header = "Referencia, Volumen, Vol Análisis, Peso, Peso Análsis, Cobro, Cobro Análisis\n"
+        header = [
+            "Referencia",
+            "Volumen",
+            "Vol Análisis",
+            "Peso",
+            "Peso Análsis",
+            "Cobro",
+            "Cobro Análisis",
+        ]
     else:
         header = "Referencia, Key\n"
+        header = ["Referencia", "Key"]
 
-    path = f"results/{name}.xlsx"
-    _.makedirs(path)
+    writer.write_excel(_, header, data, name)
 
-    with open(_.get_path(path), "w") as file:
-        file.write(header)
-        for line in data:
-            line = [str(x) for x in line]
-            file.write(", ".join(line) + "\n")
-        print(f"Se creó el archivo {name} exitosamente")
+    # path = f"results/{name}.xlsx"
+    # _.makedirs(path)
+
+    # with open(_.get_path(path), "w") as file:
+    #     file.write(header)
+    #     for line in data:
+    #         line = [str(x) for x in line]
+    #         file.write(", ".join(line) + "\n")
+    #     print(f"Se creó el archivo {name} exitosamente")
 
 
 def run(_):
