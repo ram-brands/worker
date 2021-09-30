@@ -71,6 +71,7 @@ def run(_):
 
     except FileNotFoundError as err:
         _.warning(f"No se encontró una carpeta con el nombre {err}")
+        _.status.CLIENT_ERROR
     end = time.time()
     _.log(f"Programa Finalizado en {round(end - start, 2)} segundos")
 

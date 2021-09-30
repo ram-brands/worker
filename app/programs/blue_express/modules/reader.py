@@ -9,12 +9,13 @@ from . import paths
 
 
 def get_file_name(_, keyword):
+    _.log("File name retrieved.")
     file_name = [
-        f for f in listdir(_.get_path(f"data")) if ("~" not in f) and (keyword in f)
+        f for f in listdir(_.get_path("data")) if ("~" not in f) and (keyword in f)
     ]
     if file_name:
-        _.log(f'{file_name}')
-        return file_name[0]
+        _.log(f"{file_name}")
+        return f"data/{file_name[0]}"
     else:
         _.log(f"Incorrect format with keyword {keyword}")
         _.status = Status.CLIENT_ERROR
