@@ -1,4 +1,5 @@
 from collections import namedtuple
+from os import listdir
 
 from xlrd import open_workbook
 
@@ -7,9 +8,24 @@ from status import Status
 from . import paths
 
 
-def read_BBDD_Peso_Vol(_, path=paths.BBDD_Peso_Vol):  # Leer BBDD de peso y vol por sku
+def get_file_name(_, keyword):
+    _.log("File name retrieved.")
+    file_name = [
+        f for f in listdir(_.get_path("data")) if ("~" not in f) and (keyword in f)
+    ]
+    if file_name:
+        _.log(f"{file_name}")
+        return f"data/{file_name[0]}"
+    else:
+        _.log(f"Incorrect format with keyword {keyword}")
+        _.status = Status.CLIENT_ERROR
+        raise FileNotFoundError
+
+
+def read_BBDD_Peso_Vol(_, keyword=paths.BBDD_Peso_Vol):  # Leer BBDD de peso y vol por sku
     print(f"Leyendo BBDD Peso & Vol...")
     _.log(f"Leyendo BBDD Peso & Vol...")
+    path = get_file_name(_, keyword)
     wb = open_workbook(_.get_path(path))
     for s in wb.sheets():
         if s.name == "BBDD PESO&VOL":
@@ -33,9 +49,12 @@ def read_BBDD_Peso_Vol(_, path=paths.BBDD_Peso_Vol):  # Leer BBDD de peso y vol 
     return data
 
 
-def read_BBDD_Tarifario(_, path=paths.BBDD_TARIFARIOS):  # Leer BBDD de tarifas por tramo
+def read_BBDD_Tarifario(
+    _, keyword=paths.BBDD_TARIFARIOS
+):  # Leer BBDD de tarifas por tramo
     print(f"Leyendo BBDD Tarifario...")
     _.log(f"Leyendo BBDD Tarifario...")
+    path = get_file_name(_, keyword)
     wb = open_workbook(_.get_path(path))
     for s in wb.sheets():
         if s.name == "BBDD":
@@ -82,9 +101,10 @@ def read_BBDD_Tarifario(_, path=paths.BBDD_TARIFARIOS):  # Leer BBDD de tarifas 
     return data, dest_code
 
 
-def read_ECOMSUR(_, path=paths.ECOMSUR):  # Leer Factura de ECOMSUR
+def read_ECOMSUR(_, keyword=paths.ECOMSUR):  # Leer Factura de ECOMSUR
     print(f"Leyendo Factura ECOMSUR...")
     _.log(f"Leyendo Factura ECOMSUR...")
+    path = get_file_name(_, keyword)
     wb = open_workbook(_.get_path(path))
     for s in wb.sheets():
         if s.name == "Sheet1":
@@ -114,9 +134,10 @@ def read_ECOMSUR(_, path=paths.ECOMSUR):  # Leer Factura de ECOMSUR
     return data
 
 
-def read_BBDD_Blue_Analisis(_, path=paths.BBDD_BLUE_ANALISIS):
+def read_BBDD_Blue_Analisis(_, keyword=paths.BBDD_BLUE_ANALISIS):
     print(f"Leyendo BBDD Blue Analisis...")
     _.log(f"Leyendo BBDD Blue Analisis...")
+    path = get_file_name(_, keyword)
     wb = open_workbook(_.get_path(path))
     for s in wb.sheets():
         if s.name == "BBDD OMS":  # Obtener dict con referencia:pedido_Id

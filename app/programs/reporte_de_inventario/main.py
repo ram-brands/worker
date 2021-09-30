@@ -21,11 +21,11 @@ def run(_):
             x = 1
             header = ["SKU", "Cantidad", "Costo Unit", "Costo Total"]
             for c in categories:
-                writer.write_excel(_, header, c, f"{store}-categoria_{x}")
+                writer.write_excel(_, header, c, f"{store}/categoria_{x}")
                 x += 1
             summary = cross.get_summary(_, categories)
             header = ["Etiqueta de fila", "Suma de brecha", "Suma de costo total"]
-            writer.write_excel(_, header, summary, f"{store}-resumen")
+            writer.write_excel(_, header, summary, f"{store}/resumen")
 
     except FileNotFoundError as err:
         _.status = Status.CLIENT_ERROR
