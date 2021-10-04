@@ -16,13 +16,14 @@ def process(
             new_line[final_header.index("COLOR")] = line[header.index("COLOR")]
             new_line[final_header.index("DESPROD")] = line[header.index("DESCRIPTION")]
             new_line[final_header.index("TEMPORADA")] = line[header.index("TEMPORADA")]
-            new_line[final_header.index("AÑO TEMPORADA")] = line[header.index("AÑO")]
+            if line[header.index('AÑO')]:
+                new_line[final_header.index("AÑO TEMPORADA")] = int(line[header.index('AÑO')])
             new_line[final_header.index("DELIVERY")] = line[header.index("DEL")]
             new_line[final_header.index("DELIVERY (MES)")] = line[
                 header.index("DELIVERY (MES)")
             ]
             new_line[final_header.index("PO#")] = line[header.index("PO#")]
-            new_line[final_header.index("FOB USD")] = line[header.index("PRE-COSTING")]
+            new_line[final_header.index("FOB USD")] = round(float(line[header.index('PRE-COSTING')]), 2)
             new_line[final_header.index("LLEGADA")] = line[header.index("LLEGADA")]
             new_line[final_header.index("CLASE (COMPRADOR)")] = line[
                 header.index("CLASE")
@@ -118,7 +119,7 @@ def add_parameters(
             pass
 
     if errors:
-        _.warning(f"ERROR: Estas subclases no se encuentran en los parametros:")
+        _.warning(f"ERROR: Estas subclases no se encuentran en los parámetros:")
         # for e in errors:
         #     print(e)
         _.warning(errors)
