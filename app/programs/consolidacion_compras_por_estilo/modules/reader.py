@@ -144,7 +144,7 @@ def read_parameters(_, path=paths.FORMAT_FILE):  # read parameters in sheet '3.P
 
 def read_origin_header(_, path=paths.FORMAT_FILE):  #
     _.log(f"Leyendo {path}")
-    _.log(listdir('tmp/claudia/data/'))
+    _.log(listdir("tmp/claudia/data/"))
     wb = open_workbook(_.get_path(f"{path}"))
     for s in wb.sheets():
         if s.name == "1. ARCHIVO COMPRA":
