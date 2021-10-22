@@ -20,6 +20,7 @@ def process(
                 new_line[final_header.index("AÑO TEMPORADA")] = int(
                     line[header.index("AÑO")]
                 )
+                new_line[final_header.index("AÑO")] = int(line[header.index("AÑO")])
             new_line[final_header.index("DELIVERY")] = line[header.index("DEL")]
             new_line[final_header.index("DELIVERY (MES)")] = line[
                 header.index("DELIVERY (MES)")
@@ -121,6 +122,13 @@ def add_parameters(
         else:
             # print(key)
             pass
+
+        # Edit Canal to wholesale
+        store = line[final_header.index("NOMBRE DE TIENDAS")]
+        if store in ["MIYAKI", "FALABELLA", "PARIS", "SAGA FALABELLA"]:
+            line[final_header.index("CANAL")] = "WHOLESALE"
+        if store == "SAGA FALABELLA":
+            line[final_header.index("PAÍS")] = "PERÚ"
 
     if errors:
         _.warning(f"ERROR: Estas subclases no se encuentran en los parámetros:")
