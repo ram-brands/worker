@@ -226,6 +226,8 @@ def consolidate_data(
             "San Miguel",
             "Jockey Plaza",
             "E- COMM PE",
+            "SAGA FALABELLA",
+            "PARIS",
         ]
         # if h and (required_values <= h) and (required_stores <= h):
         if (
