@@ -47,7 +47,7 @@ def cross(_, physical, sap, maestro):
     return categories
 
 
-def get_summary(_, categories):
+def get_summary(_, categories, sap_qty, physical_qty, store):
     category_1_name = "Faltantes estan en sap y faltan en fisico"
     category_2_name = "Faltantes resta entre fisico y sap"
     category_3_name = "Negativos estan en sap y faltan en fisico"
@@ -78,5 +78,12 @@ def get_summary(_, categories):
         total_stock += stock
         total_price += price
     summary.append(["Total general", total_stock, total_price])
+    summary.append([''])
+    summary.append(["Cantidad Sap", sap_qty])
+    summary.append(["Cantidad Físico", physical_qty])
+    summary.append(["Diferencia", sap_qty - physical_qty])
+    if (sap_qty - physical_qty) != total_stock:
+        _.warning(f"En la tienda {store} existe diferencia en stock.")
+        _.status = Status.WARNING
 
     return summary

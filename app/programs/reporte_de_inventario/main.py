@@ -16,14 +16,15 @@ def run(_):
         maestro = reader.read_maestro(_)
         for store in all_stores:
             physical = reader.read_physical(_, store)
-            sap = reader.read_sap(_, store)
+            physical_qty = len(physical)
+            sap, sap_qty = reader.read_sap(_, store)
             categories = cross.cross(_, physical, sap, maestro)
             x = 1
             header = ["SKU", "Cantidad", "Costo Unit", "Costo Total"]
             for c in categories:
                 writer.write_excel(_, header, c, f"{store}/categoria_{x}")
                 x += 1
-            summary = cross.get_summary(_, categories)
+            summary = cross.get_summary(_, categories, sap_qty, physical_qty, store)
             header = ["Etiqueta de fila", "Suma de brecha", "Suma de costo total"]
             writer.write_excel(_, header, summary, f"{store}/resumen")
 
