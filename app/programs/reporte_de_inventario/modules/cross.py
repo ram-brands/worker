@@ -78,7 +78,7 @@ def get_summary(_, categories, sap_qty, physical_qty, store):
         total_stock += stock
         total_price += price
     summary.append(["Total general", total_stock, total_price])
-    summary.append([''])
+    summary.append([""])
     summary.append(["Cantidad Sap", sap_qty])
     summary.append(["Cantidad Físico", physical_qty])
     summary.append(["Diferencia", sap_qty - physical_qty])
