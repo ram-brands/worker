@@ -23,6 +23,7 @@ def read_sap(_, store, keyword=paths.SAP_KEYWORD):  # Read sap stock [[sku, stoc
     wb = open_workbook(_.get_path(f"data/{store}/{file_name}"))
     for s in wb.sheets():
         data = {}
+        total_stock = 0
         Attribute = namedtuple("item", ["sku", "stock"])
         for row in range(s.nrows):
             col_value = []
@@ -40,7 +41,8 @@ def read_sap(_, store, keyword=paths.SAP_KEYWORD):  # Read sap stock [[sku, stoc
                         data[formatted_sku] += int(stock)
                     else:
                         data[formatted_sku] = int(stock)
-    return data
+                    total_stock += int(stock)
+    return data, total_stock
 
 
 def read_physical(
