@@ -96,7 +96,7 @@ def read_maestro(_, path=paths.MAESTRO):  # Leer Maestro para obtener {estilo-co
 
 def read_maestro_txt(_, path):  # Leer Maestro para obtener {estilo-color: sku}
     _.log(f"Leyendo Maestro txt...")
-    with open(_.get_path(path), "r", encoding="utf16", errors="ignore") as f:
+    with open(_.get_path(f"data/{path}"), "r", encoding="utf16", errors="ignore") as f:
         # contents = f.read()
         # contents = contents.decode('utf-16', 'ignore')
         style_color = set()
