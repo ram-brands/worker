@@ -100,15 +100,17 @@ class Manager:
 
         try:
             os.mkdir(complete_input_path)
-
-        except FileExistsError as e:
+        except FileExistsError:
             self.status = Status.CLIENT_ERROR
 
         for sub_path in root_paths:
             complete_old_path = self.get_path(sub_path)
             complete_new_path = os.path.join(complete_input_path, sub_path)
 
-            os.rename(complete_old_path, complete_new_path)
+            try:
+                os.rename(complete_old_path, complete_new_path)
+            except OSError:
+                self.status = Status.CLIENT_ERROR
 
     def get_path(self, subpath):
         return os.path.join(self.root, subpath)
