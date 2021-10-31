@@ -72,6 +72,31 @@ class Manager:
             confimation_url = f"{env.BACKEND_URL}/runs/{self.run_id}/confirmation"
             requests.post(url=confimation_url, json=dict(status=self.status.value))
 
+    def ensure_file_structure(self):
+        root_paths = os.listdir(self.root)
+        new_base = self.get_path("data")
+
+        if len(root_paths) == 1:
+            old_base = self.get_base(root_paths[0])
+
+            if os.base.isdir(old_base):
+                os.rename(old_base, new_base)
+
+                return
+
+        try:
+            os.mkdir(new_base)
+
+        except FileExistsError as e:
+            self.status = Status.CLIENT_ERROR
+            raise Exception(e) from e
+
+        for path in root_paths:
+            old_path = os.path.join(self.root, path)
+            new_path = os.path.join(new_base, old_path)
+
+            os.rename(old_path, new_path)
+
     def mount(self):
         """
         Mounts the contents of the input to the temporary file system.
@@ -83,6 +108,8 @@ class Manager:
         buffer = BytesIO(content)
         zipfile = ZipFile(buffer)
         zipfile.extractall(self.root)
+
+        self.ensure_file_structure()
 
     def get_path(self, subpath):
         return os.path.join(self.root, subpath)
