@@ -72,31 +72,6 @@ class Manager:
             confimation_url = f"{env.BACKEND_URL}/runs/{self.run_id}/confirmation"
             requests.post(url=confimation_url, json=dict(status=self.status.value))
 
-    def ensure_file_structure(self):
-        root_paths = os.listdir(self.root)
-        new_base = self.get_path("data")
-
-        if len(root_paths) == 1:
-            old_base = self.get_base(root_paths[0])
-
-            if os.base.isdir(old_base):
-                os.rename(old_base, new_base)
-
-                return
-
-        try:
-            os.mkdir(new_base)
-
-        except FileExistsError as e:
-            self.status = Status.CLIENT_ERROR
-            raise Exception(e) from e
-
-        for path in root_paths:
-            old_path = os.path.join(self.root, path)
-            new_path = os.path.join(new_base, old_path)
-
-            os.rename(old_path, new_path)
-
     def mount(self):
         """
         Mounts the contents of the input to the temporary file system.
@@ -109,7 +84,32 @@ class Manager:
         zipfile = ZipFile(buffer)
         zipfile.extractall(self.root)
 
-        self.ensure_file_structure()
+    def ensure_file_structure(self, ignored_paths, input_path):
+        all_root_paths = set(os.listdir(self.root))
+        root_paths = all_root_paths - set(ignored_paths)
+
+        complete_input_path = self.get_path(input_path)
+
+        if len(root_paths) == 1:
+            (sole_path,) = root_paths
+            complete_sole_path = self.get_path(sole_path)
+
+            if os.path.isdir(complete_sole_path):
+                os.rename(complete_sole_path, complete_input_path)
+                return
+
+        try:
+            os.mkdir(complete_input_path)
+
+        except FileExistsError as e:
+            self.status = Status.CLIENT_ERROR
+            raise Exception(e) from e
+
+        for sub_path in root_paths:
+            complete_old_path = self.get_path(sub_path)
+            complete_new_path = os.path.join(complete_input_path, sub_path)
+
+            os.rename(complete_old_path, complete_new_path)
 
     def get_path(self, subpath):
         return os.path.join(self.root, subpath)
