@@ -5,6 +5,7 @@ from . import (
     cruce_pagina_ecommerce,
     devoluciones_api_mercado_pago,
     example,
+    recepcion_mercaderia_discrepancias,
     reporte_de_inventario,
     revision_bbdd_ventas_y_stock,
     recepcion_mercaderia_discrepancias,
