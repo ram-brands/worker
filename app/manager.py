@@ -84,6 +84,34 @@ class Manager:
         zipfile = ZipFile(buffer)
         zipfile.extractall(self.root)
 
+    def ensure_file_structure(self, ignored_paths, input_path):
+        all_root_paths = set(os.listdir(self.root))
+        root_paths = all_root_paths - set(ignored_paths)
+
+        complete_input_path = self.get_path(input_path)
+
+        if len(root_paths) == 1:
+            (sole_path,) = root_paths
+            complete_sole_path = self.get_path(sole_path)
+
+            if os.path.isdir(complete_sole_path):
+                os.rename(complete_sole_path, complete_input_path)
+                return
+
+        try:
+            os.mkdir(complete_input_path)
+        except FileExistsError:
+            self.status = Status.CLIENT_ERROR
+
+        for sub_path in root_paths:
+            complete_old_path = self.get_path(sub_path)
+            complete_new_path = os.path.join(complete_input_path, sub_path)
+
+            try:
+                os.rename(complete_old_path, complete_new_path)
+            except OSError:
+                self.status = Status.CLIENT_ERROR
+
     def get_path(self, subpath):
         return os.path.join(self.root, subpath)
 
