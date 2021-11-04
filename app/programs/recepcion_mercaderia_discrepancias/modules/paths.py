@@ -1,1 +1,1 @@
-DIR = 'data'
+DIR = "data"

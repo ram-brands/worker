@@ -3,7 +3,7 @@ import xlsxwriter
 
 def write_excel(_, header, data, name="test"):
     # Create a workbook and add a worksheet.
-    path = f'results/{name}.xlsx'
+    path = f"results/{name}.xlsx"
     _.makedirs(path)
     workbook = xlsxwriter.Workbook(_.get_path(path))
     worksheet = workbook.add_worksheet()
@@ -25,12 +25,12 @@ def write_excel(_, header, data, name="test"):
 
 
 def write_csv(_, header, data, name="test"):
-    header = ", ".join(header) + '\n'
-    path = f'results/{name}.csv'
+    header = ", ".join(header) + "\n"
+    path = f"results/{name}.csv"
     _.makedirs(path)
-    with open(_.get_path(path), 'w') as file:
+    with open(_.get_path(path), "w") as file:
         file.write(header)
         for line in data:
             line = [str(x) for x in line]
-            file.write(", ".join(line) + '\n')
+            file.write(", ".join(line) + "\n")
     _.log(f"Se creó el archivo {name}.csv exitosamente")
