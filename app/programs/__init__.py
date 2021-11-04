@@ -5,6 +5,7 @@ from . import (
     cruce_pagina_ecommerce,
     devoluciones_api_mercado_pago,
     example,
+    recepcion_mercaderia_discrepancias,
     reporte_de_inventario,
     revision_bbdd_ventas_y_stock,
 )
@@ -17,5 +18,6 @@ programs = dict(
     cruce_pagina_ecommerce=cruce_pagina_ecommerce,
     revision_bbdd_ventas_y_stock=revision_bbdd_ventas_y_stock,
     reporte_de_inventario=reporte_de_inventario,
+    recepcion_mercaderia_discrepancias=recepcion_mercaderia_discrepancias,
     example=example,
 )
