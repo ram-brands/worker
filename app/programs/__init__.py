@@ -8,6 +8,7 @@ from . import (
     recepcion_mercaderia_discrepancias,
     reporte_de_inventario,
     revision_bbdd_ventas_y_stock,
+    recepcion_mercaderia_discrepancias,
 )
 
 programs = dict(

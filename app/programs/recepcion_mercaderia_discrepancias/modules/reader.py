@@ -16,7 +16,7 @@ def read_all_files(_, dir_=paths.DIR):
         d = read_asn(_, f)
         data.append(d)
     return data
-
+  
 
 def read_asn(_, f):  # Read asn
     _.log(f"Leyendo {f}...")
