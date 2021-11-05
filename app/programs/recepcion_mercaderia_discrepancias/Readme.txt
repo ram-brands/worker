@@ -4,6 +4,8 @@ Se consolida todos los archivos de faltantes y sobrantes para cada tienda.
 
 Luego del análisis, se crea un archivo 'consolidado.xlsx', el cual contiene el resultado final.
 
+Además, se crea 'resumen.xlsx' con un resumen de faltantes y sobrantes por tienda. 
+
 
 # Como utilizar el programa:
 
