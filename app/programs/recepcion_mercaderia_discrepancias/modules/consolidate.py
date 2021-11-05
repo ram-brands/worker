@@ -11,7 +11,9 @@ def consolidate(raw_data):
         "ASN",
     ]
     data = []
+    summary = []
     for asn in raw_data:
+        total_faltantes, total_sobrantes = 0, 0
         details = asn.details
         format_line = [None] * len(header)
         format_line[header.index("Tienda")] = details.store
@@ -26,10 +28,13 @@ def consolidate(raw_data):
             line[header.index("Cant")] = sku[2]
             line[header.index("Status")] = "faltante"
             data.append(line)
+            total_faltantes += int(sku[2])
         for sku in asn.sobrantes:
             line = format_line.copy()
             line[header.index("SKU")] = sku[0]
             line[header.index("Cant")] = sku[2]
             line[header.index("Status")] = "sobrantes"
             data.append(line)
-        return header, data
+            total_sobrantes += int(sku[2])
+        summary.append([details.store, total_faltantes, total_sobrantes])
+    return header, data, summary
