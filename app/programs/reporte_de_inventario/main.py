@@ -16,7 +16,7 @@ def run(_):
         maestro = reader.read_maestro(_)
         for store in all_stores:
             physical = reader.read_physical(_, store)
-            physical_qty = len(physical)
+            physical_qty = sum(physical.values())
             sap, sap_qty = reader.read_sap(_, store)
             categories = cross.cross(_, physical, sap, maestro)
             x = 1
