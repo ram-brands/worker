@@ -1,4 +1,0 @@
-BBDD_Peso_Vol = "BBDD Peso & Vol"
-BBDD_TARIFARIOS = "BBDD Tarifarios"
-ECOMSUR = "ECOMSUR DISTR OCTUBRE 20 Guess"
-BBDD_BLUE_ANALISIS = "BBDD Blue Oct (Analisis)"
