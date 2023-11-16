@@ -23,7 +23,7 @@ API_MP_TOKEN = os.environ.get("API_MP_TOKEN")
 
 
 ###################
-# LOCAL OVERWRITE #+
+# LOCAL OVERWRITE #
 ###################
 
 LOCAL_STEM = "local"
